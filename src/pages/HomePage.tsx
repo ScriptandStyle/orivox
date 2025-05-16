@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Hero from '../components/Hero';
+import FloatingContactButton from '../components/FloatingContactButton';
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('ventures');
@@ -135,20 +136,20 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden bg-slate-50">
+    <div className="flex flex-col min-h-screen overflow-hidden bg-gray-900">
       <Hero />
       
       {/* Tabs Section */}
-      <section className="py-12 bg-gradient-to-b from-white to-blue-50 w-full">
+      <section className="py-12 bg-gradient-to-b from-gray-900 to-gray-800 w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="tabs tabs-boxed flex justify-center mb-8 bg-white/70 p-1 backdrop-blur-sm max-w-xl mx-auto rounded-lg shadow-sm"
+            className="tabs tabs-boxed flex justify-center mb-8 bg-gray-800/70 p-1 backdrop-blur-sm max-w-xl mx-auto rounded-lg shadow-sm"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <motion.button 
-              className={`tab tab-lg flex-1 transition-all ${activeTab === 'ventures' ? 'tab-active bg-indigo-800 text-white' : 'hover:bg-indigo-100 text-gray-800'}`}
+              className={`tab tab-lg flex-1 transition-all ${activeTab === 'ventures' ? 'tab-active bg-indigo-700 text-white' : 'hover:bg-gray-700 text-gray-300'}`}
               onClick={() => setActiveTab('ventures')}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -156,7 +157,7 @@ const HomePage = () => {
               Our Ventures
             </motion.button>
             <motion.button 
-              className={`tab tab-lg flex-1 transition-all ${activeTab === 'timeline' ? 'tab-active bg-indigo-800 text-white' : 'hover:bg-indigo-100 text-gray-800'}`}
+              className={`tab tab-lg flex-1 transition-all ${activeTab === 'timeline' ? 'tab-active bg-indigo-700 text-white' : 'hover:bg-gray-700 text-gray-300'}`}
               onClick={() => setActiveTab('timeline')}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -164,7 +165,7 @@ const HomePage = () => {
               Timeline
             </motion.button>
             <motion.button 
-              className={`tab tab-lg flex-1 transition-all ${activeTab === 'testimonials' ? 'tab-active bg-indigo-800 text-white' : 'hover:bg-indigo-100 text-gray-800'}`}
+              className={`tab tab-lg flex-1 transition-all ${activeTab === 'testimonials' ? 'tab-active bg-indigo-700 text-white' : 'hover:bg-gray-700 text-gray-300'}`}
               onClick={() => setActiveTab('testimonials')}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -176,7 +177,7 @@ const HomePage = () => {
       </section>
 
       {/* Tab Content Container - Keeping the same background for all tabs */}
-      <section className="py-12 bg-gradient-to-b from-blue-50 to-white flex-grow w-full">
+      <section className="py-12 bg-gradient-to-b from-gray-800 to-gray-900 flex-grow w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Ventures Section */}
           <AnimatePresence mode="wait">
@@ -195,16 +196,16 @@ const HomePage = () => {
                   animate="visible"
                 >
                   <motion.div variants={badgeVariants}>
-                    <div className="badge badge-lg badge-outline badge-primary mb-4 border-indigo-800 text-indigo-800">Core Solutions</div>
+                    <div className="badge badge-lg badge-outline badge-primary mb-4 border-indigo-400 text-indigo-400">Core Solutions</div>
                   </motion.div>
                   <motion.h2 
-                    className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-800"
+                    className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-200"
                     variants={headingVariants}
                   >
-                    Our <span className="text-indigo-800 relative inline-block">
+                    Our <span className="text-indigo-400 relative inline-block">
                       Ventures
                       <motion.span 
-                        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-800 to-indigo-800"
+                        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-600 to-indigo-600"
                         initial={{ width: 0 }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 0.8, delay: 0.3 }}
@@ -212,7 +213,7 @@ const HomePage = () => {
                     </span>
                   </motion.h2>
                   <motion.p 
-                    className="text-gray-700 max-w-2xl mx-auto"
+                    className="text-gray-400 max-w-2xl mx-auto"
                     variants={itemVariants}
                   >
                     Explore Orivox's innovative projects across multiple domains, each driving the future of technology and human experience.
@@ -228,11 +229,11 @@ const HomePage = () => {
                   {projects.map((project, index) => (
                     <motion.div
                       key={project.title}
-                      className="card glass backdrop-blur-sm shadow-xl overflow-hidden border border-gray-200 h-full flex flex-col bg-white/70"
+                      className="card glass backdrop-blur-sm shadow-xl overflow-hidden border border-gray-700 h-full flex flex-col bg-gray-800/70"
                       variants={itemVariants}
                       whileHover={{ 
                         y: -5,
-                        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+                        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
                       }}
                       transition={{ duration: 0.2 }}
                     >
@@ -248,34 +249,31 @@ const HomePage = () => {
                       </figure>
                       <div className="card-body flex flex-col flex-grow">
                         <motion.h3 
-                          className="card-title text-2xl font-bold font-space-grotesk text-gray-800"
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
+                          className="card-title text-xl font-orbitron text-gray-200"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
                           transition={{ duration: 0.5, delay: 0.3 + (index * 0.1) }}
                         >
                           {project.title}
                         </motion.h3>
-                        <div className="divider my-1"></div>
                         <motion.p 
-                          className="text-gray-700 mb-6 flex-grow"
+                          className="text-gray-400 flex-grow"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.5, delay: 0.4 + (index * 0.1) }}
                         >
                           {project.description}
                         </motion.p>
-                        <div className="card-actions justify-end mt-auto">
-                          <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                        <div className="card-actions justify-end mt-4">
+                          <Link 
+                            to={project.link} 
+                            className="btn btn-sm bg-indigo-700 hover:bg-indigo-800 border-none text-white"
                           >
-                            <Link to={project.link} className="btn btn-primary bg-indigo-800 hover:bg-indigo-900 border-none text-white">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              Explore
-                            </Link>
-                          </motion.div>
+                            Explore
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </Link>
                         </div>
                       </div>
                     </motion.div>
@@ -283,7 +281,7 @@ const HomePage = () => {
                 </motion.div>
               </motion.div>
             )}
-
+            
             {/* Timeline Section */}
             {activeTab === 'timeline' && showContent && (
               <motion.div
@@ -292,6 +290,7 @@ const HomePage = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.5 }}
+                className="py-8"
               >
                 <motion.div
                   className="text-center mb-12"
@@ -300,16 +299,16 @@ const HomePage = () => {
                   animate="visible"
                 >
                   <motion.div variants={badgeVariants}>
-                    <div className="badge badge-lg badge-outline badge-primary mb-4 border-indigo-800 text-indigo-800">Our Journey</div>
+                    <div className="badge badge-lg badge-outline badge-primary mb-4 border-indigo-400 text-indigo-400">Our Journey</div>
                   </motion.div>
                   <motion.h2 
-                    className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-800"
+                    className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-200"
                     variants={headingVariants}
                   >
-                    Growth <span className="text-indigo-800 relative inline-block">
+                    Innovation <span className="text-indigo-400 relative inline-block">
                       Timeline
                       <motion.span 
-                        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-800 to-indigo-800"
+                        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-600 to-indigo-600"
                         initial={{ width: 0 }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 0.8, delay: 0.3 }}
@@ -317,76 +316,67 @@ const HomePage = () => {
                     </span>
                   </motion.h2>
                   <motion.p 
-                    className="text-gray-700 max-w-2xl mx-auto"
+                    className="text-gray-400 max-w-2xl mx-auto"
                     variants={itemVariants}
                   >
-                    The evolution of Orivox from inception to the present day, marking our key milestones.
+                    The evolution of Orivox through key milestones that have shaped our journey.
                   </motion.p>
                 </motion.div>
 
                 <div className="max-w-4xl mx-auto">
-                  <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+                  <div className="relative">
+                    {/* Timeline Line */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-indigo-700 to-purple-700"></div>
+                    
+                    {/* Timeline Items */}
                     {milestones.map((milestone, index) => (
-                      <motion.li
+                      <motion.div 
                         key={milestone.year}
-                        initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          duration: 0.6, 
-                          delay: 0.3 + (index * 0.15),
-                          type: "spring", 
-                          stiffness: 100 
-                        }}
+                        className={`flex items-center mb-12 last:mb-0 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
                       >
-                        <motion.div 
-                          className="timeline-middle"
-                          initial={{ scale: 0, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.4, delay: 0.5 + (index * 0.15) }}
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-indigo-800">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
-                          </svg>
-                        </motion.div>
-                        <div className={index % 2 === 0 ? "timeline-start md:text-end mb-10" : "timeline-end mb-10"}>
-                          <motion.time 
-                            className="font-mono text-lg font-bold text-indigo-800"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: 0.6 + (index * 0.15) }}
-                          >
-                            {milestone.year}
-                          </motion.time>
-                          <motion.div 
-                            className="text-lg font-bold font-space-grotesk text-gray-800"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: 0.7 + (index * 0.15) }}
-                          >
-                            {milestone.title}
-                          </motion.div>
-                          <motion.p 
-                            className="text-gray-700"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.4, delay: 0.8 + (index * 0.15) }}
-                          >
-                            {milestone.description}
-                          </motion.p>
+                        {/* Year */}
+                        <div className="w-1/2 pr-8 text-right">
+                          {index % 2 === 0 ? (
+                            <div className="text-right">
+                              <h3 className="text-2xl font-bold text-indigo-400">{milestone.year}</h3>
+                              <h4 className="text-lg font-semibold text-gray-200">{milestone.title}</h4>
+                              <p className="text-gray-400">{milestone.description}</p>
+                            </div>
+                          ) : (
+                            <div className="w-12 h-12 rounded-full bg-indigo-800 flex items-center justify-center shadow-lg text-white font-bold">
+                              {milestone.year}
+                            </div>
+                          )}
                         </div>
-                        <motion.hr 
-                          className={index % 2 === 0 ? "bg-indigo-800" : "bg-blue-800"}
-                          initial={{ width: "0%" }}
-                          animate={{ width: "100%" }}
-                          transition={{ duration: 0.8, delay: 0.4 + (index * 0.15) }}
-                        />
-                      </motion.li>
+                        
+                        {/* Point */}
+                        <div className="relative h-8 w-8 rounded-full bg-indigo-600 border-4 border-gray-800 shadow-glow z-10"></div>
+                        
+                        {/* Content */}
+                        <div className="w-1/2 pl-8">
+                          {index % 2 === 1 ? (
+                            <div>
+                              <h3 className="text-2xl font-bold text-indigo-400">{milestone.year}</h3>
+                              <h4 className="text-lg font-semibold text-gray-200">{milestone.title}</h4>
+                              <p className="text-gray-400">{milestone.description}</p>
+                            </div>
+                          ) : (
+                            <div className="w-12 h-12 rounded-full bg-indigo-800 flex items-center justify-center shadow-lg text-white font-bold">
+                              {milestone.year}
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               </motion.div>
             )}
-
+            
             {/* Testimonials Section */}
             {activeTab === 'testimonials' && showContent && (
               <motion.div
@@ -395,6 +385,7 @@ const HomePage = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.5 }}
+                className="py-8"
               >
                 <motion.div
                   className="text-center mb-12"
@@ -403,16 +394,16 @@ const HomePage = () => {
                   animate="visible"
                 >
                   <motion.div variants={badgeVariants}>
-                    <div className="badge badge-lg badge-outline badge-primary mb-4 border-indigo-800 text-indigo-800">What People Say</div>
+                    <div className="badge badge-lg badge-outline badge-primary mb-4 border-indigo-400 text-indigo-400">What People Say</div>
                   </motion.div>
                   <motion.h2 
-                    className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-800"
+                    className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-200"
                     variants={headingVariants}
                   >
-                    Client <span className="text-indigo-800 relative inline-block">
+                    Client <span className="text-indigo-400 relative inline-block">
                       Testimonials
                       <motion.span 
-                        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-800 to-indigo-800"
+                        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-600 to-indigo-600"
                         initial={{ width: 0 }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 0.8, delay: 0.3 }}
@@ -420,67 +411,40 @@ const HomePage = () => {
                     </span>
                   </motion.h2>
                   <motion.p 
-                    className="text-gray-700 max-w-2xl mx-auto"
+                    className="text-gray-400 max-w-2xl mx-auto"
                     variants={itemVariants}
                   >
-                    Hear what our partners and users have to say about Orivox's solutions.
+                    Hear from those who have experienced our innovations firsthand.
                   </motion.p>
                 </motion.div>
 
-                <motion.div 
-                  className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
-                  variants={staggerContainerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                   {testimonials.map((testimonial, index) => (
                     <motion.div
-                      key={index}
-                      className="card bg-white shadow-lg border border-gray-200 h-full"
-                      variants={itemVariants}
-                      whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+                      key={testimonial.author}
+                      className="card bg-gray-800 shadow-xl border border-gray-700"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      whileHover={{ 
+                        y: -5,
+                        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+                      }}
                     >
-                      <div className="card-body flex flex-col">
-                        <motion.div 
-                          className="chat chat-start flex-grow"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ 
-                            duration: 0.6, 
-                            delay: 0.3 + (index * 0.2) 
-                          }}
-                        >
-                          <motion.div 
-                            className="chat-bubble chat-bubble-primary bg-indigo-800 text-white"
-                            initial={{ scale: 0.8 }}
-                            animate={{ scale: 1 }}
-                            transition={{ 
-                              duration: 0.6, 
-                              delay: 0.4 + (index * 0.2),
-                              type: "spring" 
-                            }}
-                          >
-                            "{testimonial.quote}"
-                          </motion.div>
-                        </motion.div>
-                        <motion.div 
-                          className="flex justify-end mt-4"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ 
-                            duration: 0.5, 
-                            delay: 0.5 + (index * 0.2) 
-                          }}
-                        >
-                          <div className="text-right">
-                            <p className="font-bold text-lg text-gray-800">{testimonial.author}</p>
-                            <p className="text-sm text-gray-600">{testimonial.role}</p>
-                          </div>
-                        </motion.div>
+                      <div className="card-body">
+                        <svg className="w-10 h-10 text-indigo-400 mb-3" fill="currentColor" viewBox="0 0 32 32">
+                          <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H7c0-1.7 1.3-3 3-3V8zm18 0c-3.3 0-6 2.7-6 6v10h10V14h-7c0-1.7 1.3-3 3-3V8z"/>
+                        </svg>
+                        <p className="text-lg italic text-gray-300 mb-4">{testimonial.quote}</p>
+                        <div className="mt-auto">
+                          <h3 className="font-bold text-indigo-400">{testimonial.author}</h3>
+                          <p className="text-sm text-gray-400">{testimonial.role}</p>
+                        </div>
                       </div>
                     </motion.div>
                   ))}
-                </motion.div>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -547,6 +511,9 @@ const HomePage = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Floating Contact Button */}
+      <FloatingContactButton />
     </div>
   );
 };

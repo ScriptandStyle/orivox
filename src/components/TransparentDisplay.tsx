@@ -1,17 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
+=======
+import React, { useRef } from 'react';
+>>>>>>> feature/logo-integration
 
 const TransparentDisplay = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0]);
 
   const features = [
     {
@@ -24,6 +21,7 @@ const TransparentDisplay = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          strokeWidth="2"
         >
           <path
             strokeLinecap="round"
@@ -50,6 +48,7 @@ const TransparentDisplay = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          strokeWidth="2"
         >
           <path
             strokeLinecap="round"
@@ -70,6 +69,7 @@ const TransparentDisplay = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          strokeWidth="2"
         >
           <path
             strokeLinecap="round"
@@ -91,105 +91,82 @@ const TransparentDisplay = () => {
     'Gaming Interfaces',
   ];
 
-  useEffect(() => {
-    if (sectionRef.current) {
-      gsap.from('.feature-card', {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top center',
-          end: 'bottom center',
-          toggleActions: 'play none none reverse',
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-      });
-    }
-  }, []);
-
   return (
     <section
       ref={sectionRef}
       id="display"
-      className="section-container bg-gradient-to-b from-white to-cool-blue/10"
+      className="section-container bg-gradient-to-b from-gray-900 to-gray-800"
     >
-      <motion.div
+      <div
         className="text-center mb-16"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-200">
           <span className="gradient-text">Transparent Display</span>
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="text-gray-300 max-w-2xl mx-auto">
           Revolutionary display technology that transforms how we interact with
           digital content in physical spaces.
         </p>
-      </motion.div>
+        <div className="divider max-w-md mx-auto my-4"></div>
+      </div>
 
-      {/* Parallax Display Mockup */}
-      <motion.div
-        style={{ y, opacity }}
-        className="relative h-[400px] mb-16 overflow-hidden rounded-xl"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-electric-violet/20 to-accent-neon/20 backdrop-blur-sm">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-4xl md:text-6xl font-orbitron text-white text-center">
+      {/* Hero Display */}
+      <div className="hero bg-gray-800 mb-16 rounded-xl overflow-hidden border border-gray-700">
+        <div className="hero-overlay bg-gradient-to-r from-electric-violet/50 to-accent-neon/50 backdrop-blur-sm"></div>
+        <div className="hero-content text-center text-neutral-content py-16">
+          <div className="max-w-md">
+            <h1 className="text-4xl md:text-6xl font-orbitron text-center font-bold text-white mb-6" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.7)' }}>
               The Future is
               <br />
               Transparent
-            </div>
+            </h1>
+            <button className="btn btn-primary">Learn More</button>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Features */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
         {features.map((feature, index) => (
-          <motion.div
+          <div
             key={feature.title}
-            className="feature-card card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300"
-            whileHover={{ scale: 1.02 }}
+            className="card bg-gray-800 shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-700"
           >
             <div className="card-body items-center text-center">
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="card-title font-orbitron">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <div className="mb-4 bg-electric-violet/20 p-3 rounded-full">{feature.icon}</div>
+              <h3 className="card-title font-orbitron text-gray-200 font-bold">{feature.title}</h3>
+              <p className="text-gray-300 font-medium">{feature.description}</p>
+              <div className="card-actions justify-end mt-4">
+                <div className="badge badge-outline badge-primary">Feature</div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Applications */}
-      <motion.div
-        className="bg-white rounded-xl p-8 shadow-xl"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+      <div
+        className="bg-gray-800 rounded-xl p-8 shadow-xl border border-gray-700"
       >
-        <h3 className="text-2xl font-bold text-center mb-8">
+        <h3 className="text-2xl font-bold text-center mb-8 text-gray-200">
           Future Applications
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {applications.map((app, index) => (
-            <motion.div
+            <div
               key={app}
-              className="bg-gray-50 rounded-lg p-4 text-center"
-              whileHover={{ scale: 1.05 }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              className="card compact bg-gray-700 border border-gray-600 hover:border-gray-500 transition-colors duration-300"
             >
-              <span className="text-electric-violet font-medium">{app}</span>
-            </motion.div>
+              <div className="card-body items-center text-center p-4">
+                <span className="text-primary font-bold">{app}</span>
+                <div className="card-actions justify-center mt-2">
+                  <div className="badge badge-secondary badge-sm">Coming Soon</div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

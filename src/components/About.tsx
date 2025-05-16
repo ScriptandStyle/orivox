@@ -33,7 +33,7 @@ const About = () => {
         'Revolutionizing visual technology with cutting-edge transparent displays. Our innovations bridge the gap between digital content and physical space.',
       icon: (
         <svg
-          className="w-12 h-12 text-electric-violet"
+          className="w-12 h-12 text-purple-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -53,7 +53,7 @@ const About = () => {
         'Empowering college students through our innovative freelancing ecosystem. Build portfolios, share knowledge, and gain real-world experience.',
       icon: (
         <svg
-          className="w-12 h-12 text-electric-violet"
+          className="w-12 h-12 text-purple-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -73,7 +73,7 @@ const About = () => {
         'A collaborative space where innovative ideas in healthcare and space technology come to life. Pushing boundaries and creating future solutions.',
       icon: (
         <svg
-          className="w-12 h-12 text-electric-violet"
+          className="w-12 h-12 text-purple-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -93,11 +93,11 @@ const About = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="section-container bg-gradient-to-b from-white to-cool-blue/10"
+      className="section-container bg-gradient-to-b from-gray-900 to-gray-800"
     >
       <div className="text-center mb-16">
         <motion.h2
-          className="text-3xl md:text-4xl font-bold mb-4"
+          className="text-3xl md:text-4xl font-bold mb-4 text-gray-200"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -106,7 +106,7 @@ const About = () => {
           About <span className="gradient-text">Orivox</span>
         </motion.h2>
         <motion.p
-          className="text-gray-600 max-w-2xl mx-auto"
+          className="text-gray-400 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -122,14 +122,14 @@ const About = () => {
           <div
             key={card.title}
             ref={(el) => (cardsRef.current[index] = el)}
-            className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300"
+            className="card bg-gray-800 shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-700"
           >
             <div className="card-body items-center text-center">
               <div className="mb-4">{card.icon}</div>
-              <h3 className="card-title font-orbitron text-xl mb-2">
+              <h3 className="card-title font-orbitron text-xl mb-2 text-gray-200">
                 {card.title}
               </h3>
-              <p className="text-gray-600">{card.description}</p>
+              <p className="text-gray-400">{card.description}</p>
             </div>
           </div>
         ))}

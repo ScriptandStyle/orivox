@@ -4,17 +4,17 @@
   "name": "ORIVOX - Futuristic Multi-domain Startup",
   "icons": [
     {
-      "src": "images/orivox-logo.svg",
+      "src": "images/orivox-text.svg",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/svg+xml"
     },
     {
-      "src": "images/orivox-logo.svg",
+      "src": "images/orivox-text.svg",
       "type": "image/svg+xml",
       "sizes": "192x192"
     },
     {
-      "src": "images/orivox-logo.svg",
+      "src": "images/orivox-text.svg",
       "type": "image/svg+xml",
 =======
   "short_name": "React App",
