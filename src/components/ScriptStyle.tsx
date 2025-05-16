@@ -50,7 +50,7 @@ const ScriptStyle = () => {
   ];
 
   return (
-    <section id="scriptstyle" className="section-container">
+    <section id="scriptstyle" className="section-container bg-gray-900">
       <motion.div
         className="text-center mb-16"
         initial={{ opacity: 0, y: 20 }}
@@ -58,10 +58,10 @@ const ScriptStyle = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-200">
           <span className="gradient-text">Script&Style</span>
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="text-gray-300 max-w-2xl mx-auto">
           Empowering college students through our innovative freelancing ecosystem.
           Build your portfolio, gain experience, and earn while you learn.
         </p>
@@ -82,18 +82,18 @@ const ScriptStyle = () => {
                   alt={testimonial.name}
                   className="w-20 h-20 rounded-full mb-4"
                 />
-                <blockquote className="text-lg text-gray-600 text-center max-w-2xl mb-4">
+                <blockquote className="text-lg text-gray-300 text-center max-w-2xl mb-4">
                   "{testimonial.quote}"
                 </blockquote>
-                <cite className="font-semibold text-electric-violet">
+                <cite className="font-semibold text-indigo-400">
                   {testimonial.name}
                 </cite>
-                <p className="text-sm text-gray-500">{testimonial.role}</p>
+                <p className="text-sm text-gray-400">{testimonial.role}</p>
               </div>
               <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                 <a
                   href={`#slide${index === 0 ? testimonials.length : index}`}
-                  className="btn btn-circle"
+                  className="btn btn-circle bg-gray-700 border-gray-600 text-gray-200"
                 >
                   ❮
                 </a>
@@ -101,7 +101,7 @@ const ScriptStyle = () => {
                   href={`#slide${
                     index === testimonials.length - 1 ? 1 : index + 2
                   }`}
-                  className="btn btn-circle"
+                  className="btn btn-circle bg-gray-700 border-gray-600 text-gray-200"
                 >
                   ❯
                 </a>
@@ -110,32 +110,6 @@ const ScriptStyle = () => {
           ))}
         </div>
       </div>
-
-      {/* FAQ Section */}
-      <motion.div
-        className="max-w-3xl mx-auto"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <h3 className="text-2xl font-bold text-center mb-8">
-          Frequently Asked Questions
-        </h3>
-        <div className="join join-vertical w-full">
-          {faqs.map((faq, index) => (
-            <div key={index} className="collapse collapse-arrow join-item">
-              <input type="radio" name="faq-accordion" />
-              <div className="collapse-title text-xl font-medium">
-                {faq.question}
-              </div>
-              <div className="collapse-content">
-                <p className="text-gray-600">{faq.answer}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
     </section>
   );
 };

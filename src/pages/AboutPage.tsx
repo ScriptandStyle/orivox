@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import FloatingContactButton from '../components/FloatingContactButton';
+import { Link } from 'react-router-dom';
 
 const AboutPage = () => {
   const timelineEvents = [
@@ -132,19 +134,19 @@ const AboutPage = () => {
   ];
 
   return (
-    <div>
+    <div className="bg-gray-900">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-white to-cool-blue/20 py-20">
+      <section className="bg-gradient-to-b from-gray-900 to-gray-800 py-20">
         <motion.div 
           className="container mx-auto px-4 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 font-orbitron">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 font-orbitron text-gray-200">
             Our <span className="gradient-text">Story</span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-10">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
             From a simple idea to a multi-domain innovation hub – discover how Orivox is shaping the future across technology, education, healthcare, and space exploration.
           </p>
           <div className="w-24 h-2 bg-gradient-to-r from-electric-violet to-accent-neon mx-auto rounded-full"></div>
@@ -152,7 +154,7 @@ const AboutPage = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20">
+      <section className="py-20 bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             <motion.div
@@ -160,10 +162,10 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white p-8 rounded-xl shadow-lg"
+              className="bg-gray-700 p-8 rounded-xl shadow-lg border border-gray-600"
             >
-              <h2 className="text-3xl font-bold mb-6 font-space-grotesk">Our Mission</h2>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <h2 className="text-3xl font-bold mb-6 font-space-grotesk text-gray-200">Our Mission</h2>
+              <p className="text-gray-300 text-lg leading-relaxed">
                 To create innovative solutions that bridge the gap between imagination and reality, empowering people to achieve their full potential through technology, education, and collaborative exploration.
               </p>
             </motion.div>
@@ -173,10 +175,10 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white p-8 rounded-xl shadow-lg"
+              className="bg-gray-700 p-8 rounded-xl shadow-lg border border-gray-600"
             >
-              <h2 className="text-3xl font-bold mb-6 font-space-grotesk">Our Vision</h2>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <h2 className="text-3xl font-bold mb-6 font-space-grotesk text-gray-200">Our Vision</h2>
+              <p className="text-gray-300 text-lg leading-relaxed">
                 A world where technology seamlessly integrates with human experience, where students have equal access to opportunities, and where innovations in healthcare and space exploration improve life on Earth and beyond.
               </p>
             </motion.div>
@@ -185,7 +187,7 @@ const AboutPage = () => {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 bg-gradient-to-b from-cool-blue/10 to-white">
+      <section className="py-20 bg-gradient-to-b from-gray-800 to-gray-900">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
@@ -194,10 +196,10 @@ const AboutPage = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-orbitron">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-200">
               Our <span className="gradient-text">Journey</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-300 max-w-2xl mx-auto">
               The evolution of Orivox from concept to reality, marking our key milestones along the way.
             </p>
           </motion.div>
@@ -217,19 +219,19 @@ const AboutPage = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <div className={`w-1/2 px-4 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
+                  <div className="bg-gray-700 p-6 rounded-xl shadow-md border border-gray-600">
                     <h3 className="text-2xl font-bold text-electric-violet mb-2 font-space-grotesk">{event.title}</h3>
-                    <p className="text-gray-600">{event.description}</p>
+                    <p className="text-gray-300">{event.description}</p>
                   </div>
                 </div>
                 <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center font-bold z-10 overflow-hidden">
+                  <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center font-bold z-10 overflow-hidden border border-gray-600">
                     {event.avatar}
                   </div>
                 </div>
                 <div className={`w-1/2 px-4 ${index % 2 === 0 ? 'text-left' : 'text-right'}`}>
                   <div className="py-2">
-                    <span className="text-sm font-medium text-indigo-800 bg-indigo-100 px-3 py-1 rounded-full">
+                    <span className="text-sm font-medium text-indigo-300 bg-indigo-900 px-3 py-1 rounded-full">
                       {event.year}
                     </span>
                   </div>
@@ -241,7 +243,7 @@ const AboutPage = () => {
       </section>
 
       {/* Core Values */}
-      <section className="py-20">
+      <section className="py-20 bg-gray-800">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
@@ -250,10 +252,10 @@ const AboutPage = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-orbitron">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-200">
               Our <span className="gradient-text">Values</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-300 max-w-2xl mx-auto">
               The principles that guide everything we do at Orivox.
             </p>
           </motion.div>
@@ -262,18 +264,18 @@ const AboutPage = () => {
             {coreValues.map((value, index) => (
               <motion.div
                 key={value.title}
-                className="flex bg-white p-6 rounded-xl shadow-md"
+                className="flex bg-gray-700 p-6 rounded-xl shadow-md border border-gray-600"
                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="mr-4 bg-cool-blue/20 p-4 rounded-lg">
+                <div className="mr-4 bg-electric-violet/20 p-4 rounded-lg">
                   {value.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 font-space-grotesk">{value.title}</h3>
-                  <p className="text-gray-600">{value.description}</p>
+                  <h3 className="text-xl font-bold mb-2 font-space-grotesk text-gray-200">{value.title}</h3>
+                  <p className="text-gray-300">{value.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -282,7 +284,7 @@ const AboutPage = () => {
       </section>
 
       {/* Leadership Team */}
-      <section className="py-20 bg-gradient-to-b from-white to-cool-blue/10">
+      <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
@@ -291,41 +293,51 @@ const AboutPage = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-orbitron">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-orbitron text-gray-200">
               Our <span className="gradient-text">Founding Team</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-300 max-w-2xl mx-auto">
               Meet the visionaries behind Orivox who are bringing our multi-domain approach to life.
             </p>
           </motion.div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {leadershipTeam.map((member, index) => (
               <motion.div
                 key={member.name}
-                className="bg-white p-6 rounded-xl shadow-md text-center"
+                className="bg-gray-700 rounded-xl overflow-hidden shadow-lg border border-gray-600"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="flex justify-center mb-4">
-                  {member.avatar}
-                </div>
-                <h3 className="text-xl font-bold mb-1 font-space-grotesk">{member.name}</h3>
-                <p className="text-electric-violet font-medium mb-4">{member.role}</p>
-                <p className="text-gray-600 text-sm mb-4">{member.bio}</p>
-                <div className="text-sm text-gray-500 space-y-1">
-                  <p>📱 {member.contact}</p>
-                  <p>📧 {member.email}</p>
-                  <a 
-                    href={member.linkedin} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-cool-blue hover:text-electric-violet transition-colors"
-                  >
-                    LinkedIn Profile
-                  </a>
+                <div className="p-4 text-center">
+                  <div className="mx-auto mb-4">
+                    {member.avatar}
+                  </div>
+                  <h3 className="text-xl font-bold mb-1 text-gray-200">{member.name}</h3>
+                  <p className="text-indigo-400 mb-3 font-medium">{member.role}</p>
+                  <p className="text-gray-300 mb-3 text-sm">{member.bio}</p>
+                  
+                  <div className="mt-3 border-t border-gray-600 pt-3">
+                    <div className="flex items-center justify-center gap-3">
+                      <a href={`tel:${member.contact}`} className="text-gray-300 hover:text-electric-violet transition-colors">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                      </a>
+                      <a href={`mailto:${member.email}`} className="text-gray-300 hover:text-electric-violet transition-colors">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                        </svg>
+                      </a>
+                      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-electric-violet transition-colors">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -333,25 +345,41 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Join Us CTA */}
-      <section className="py-16 bg-gradient-to-r from-electric-violet to-accent-neon text-white">
-        <div className="container mx-auto px-4 text-center">
+      {/* Contact CTA */}
+      <section className="py-16 bg-gradient-to-r from-indigo-900 to-purple-900 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <svg className="absolute z-0 opacity-10" width="100%" height="100%">
+            <pattern id="pattern-circles" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse">
+              <circle id="pattern-circle" cx="10" cy="10" r="2" fill="#fff"></circle>
+            </pattern>
+            <rect id="rect" x="0" y="0" width="100%" height="100%" fill="url(#pattern-circles)"></rect>
+          </svg>
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="max-w-3xl mx-auto"
           >
-            <h2 className="text-3xl font-bold mb-6 font-orbitron">Join Our Journey</h2>
-            <p className="text-xl max-w-2xl mx-auto mb-8">
-              Be part of a multi-domain innovator that's addressing challenges across display technology, student empowerment, and future-focused research.
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white font-orbitron">Ready to Join Our Journey?</h2>
+            <p className="text-xl text-white/90 mb-8">
+              Connect with us to explore partnership opportunities, careers, or just to learn more about what we're building.
             </p>
-            <button className="btn btn-lg glass text-white hover:bg-white/20">
+            <Link to="/contact" className="btn btn-lg glass text-white border-white hover:bg-white/20">
+              <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
               Get in Touch
-            </button>
+            </Link>
           </motion.div>
         </div>
       </section>
+
+      {/* Floating Contact Button */}
+      <FloatingContactButton />
     </div>
   );
 };

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <!-- Background -->
+  <rect width="300" height="300" fill="#1A2242" />
+  
+  <!-- Hexagon Logo with metallic gradient -->
+  <defs>
+    <linearGradient id="metallic" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B8C6DB" />
+      <stop offset="50%" stop-color="#EAEAEA" />
+      <stop offset="100%" stop-color="#B8C6DB" />
+    </linearGradient>
+  </defs>
+  
+  <g fill="none" stroke="url(#metallic)" stroke-width="3" transform="translate(50, 25)">
+    <path d="M175,50 L75,150 L175,250 L275,150 L175,50 Z" />
+    <path d="M175,70 L95,150 L175,230 L255,150 L175,70 Z" />
+    <path d="M175,90 L115,150 L175,210 L235,150 L175,90 Z" />
+    <path d="M175,110 L135,150 L175,190 L215,150 L175,110 Z" />
+  </g>
+</svg> 

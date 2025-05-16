@@ -71,7 +71,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-container">
+    <section id="contact" className="section-container bg-gray-900">
       <motion.div
         className="text-center mb-16"
         initial={{ opacity: 0, y: 20 }}
@@ -79,10 +79,10 @@ const Contact = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-200">
           <span className="gradient-text">Get in Touch</span>
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="text-gray-400 max-w-2xl mx-auto">
           Have a question or want to collaborate? We'd love to hear from you.
           Reach out to us using the form below.
         </p>
@@ -103,28 +103,28 @@ const Contact = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text">Name</span>
+                    <span className="label-text text-gray-300">Name</span>
                   </label>
                   <input
                     type="text"
                     name="name"
                     value={formState.name}
                     onChange={handleChange}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full bg-gray-800 border-gray-700 text-gray-200"
                     required
                   />
                 </div>
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text">Email</span>
+                    <span className="label-text text-gray-300">Email</span>
                   </label>
                   <input
                     type="email"
                     name="email"
                     value={formState.email}
                     onChange={handleChange}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full bg-gray-800 border-gray-700 text-gray-200"
                     required
                   />
                 </div>
@@ -132,34 +132,34 @@ const Contact = () => {
 
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text">Subject</span>
+                  <span className="label-text text-gray-300">Subject</span>
                 </label>
                 <input
                   type="text"
                   name="subject"
                   value={formState.subject}
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full bg-gray-800 border-gray-700 text-gray-200"
                   required
                 />
               </div>
 
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text">Message</span>
+                  <span className="label-text text-gray-300">Message</span>
                 </label>
                 <textarea
                   name="message"
                   value={formState.message}
                   onChange={handleChange}
-                  className="textarea textarea-bordered h-32"
+                  className="textarea textarea-bordered h-32 bg-gray-800 border-gray-700 text-gray-200"
                   required
                 ></textarea>
               </div>
 
               <motion.button
                 type="submit"
-                className="btn btn-primary bg-electric-violet hover:bg-electric-violet/90 border-none text-white w-full md:w-auto"
+                className="btn bg-indigo-600 hover:bg-indigo-700 border-none text-white w-full md:w-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -170,39 +170,41 @@ const Contact = () => {
 
           {/* Contact Information */}
           <motion.div
-            className="bg-gray-50 p-6 rounded-lg shadow-sm"
+            className="bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-700"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-xl font-bold mb-6 gradient-text">Contact Information</h3>
+            <h3 className="text-xl font-bold mb-6 text-indigo-400">Contact Information</h3>
             
             {/* Address */}
             <div className="mb-6">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <svg className="w-5 h-5 mr-2 text-electric-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <h4 className="font-bold text-gray-200 mb-2 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
                 Address
               </h4>
-              <address className="not-italic text-gray-600 ml-7">
+              <address className="not-italic text-gray-400 ml-7">
                 Sri Eshwar College of Engineering<br />
-                Kinathukadavu, Coimbatore
+                Coimbatore, Coimbatore<br />
+                Tamil Nadu 641202<br />
+                <span className="text-sm text-gray-500">Plus Code: R3H6+56 Kondampatty, Tamil Nadu</span>
               </address>
             </div>
             
             {/* Phone */}
             <div className="mb-6">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <svg className="w-5 h-5 mr-2 text-electric-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <h4 className="font-bold text-gray-200 mb-2 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                 </svg>
                 Phone
               </h4>
-              <p className="text-gray-600 ml-7">
-                <a href="tel:8778848565" className="hover:text-electric-violet transition-colors duration-200">
+              <p className="text-gray-400 ml-7">
+                <a href="tel:8778848565" className="hover:text-indigo-400 transition-colors duration-200">
                   8778848565
                 </a>
               </p>
@@ -210,14 +212,14 @@ const Contact = () => {
             
             {/* Email */}
             <div className="mb-6">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <svg className="w-5 h-5 mr-2 text-electric-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <h4 className="font-bold text-gray-200 mb-2 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
                 Email
               </h4>
-              <p className="text-gray-600 ml-7">
-                <a href="mailto:orivox8@gmail.com" className="hover:text-electric-violet transition-colors duration-200">
+              <p className="text-gray-400 ml-7">
+                <a href="mailto:orivox8@gmail.com" className="hover:text-indigo-400 transition-colors duration-200">
                   orivox8@gmail.com
                 </a>
               </p>
@@ -225,13 +227,13 @@ const Contact = () => {
             
             {/* Social Links */}
             <div>
-              <h4 className="font-bold text-gray-800 mb-3">Connect With Us</h4>
+              <h4 className="font-bold text-gray-200 mb-3">Connect With Us</h4>
               <div className="flex space-x-3 ml-2">
                 {socialLinks.map((link) => (
                   <motion.a
                     key={link.name}
                     href={link.href}
-                    className="btn btn-sm btn-circle bg-white hover:bg-electric-violet/10 text-gray-600 hover:text-electric-violet border border-gray-200"
+                    className="btn btn-sm btn-circle bg-gray-700 hover:bg-indigo-600 text-gray-300 hover:text-white border border-gray-600"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -243,18 +245,36 @@ const Contact = () => {
           </motion.div>
         </div>
 
-        {/* Map */}
-        <motion.div
-          className="rounded-lg overflow-hidden shadow-md h-64 mb-8"
+        {/* Map Title */}
+        <motion.div 
+          className="mb-4"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h3 className="text-xl font-bold text-gray-200">Find Us</h3>
+          <p className="text-gray-400">Visit our campus in Coimbatore</p>
+        </motion.div>
+
+        {/* Map Iframe */}
+        <motion.div 
+          className="w-full h-96 rounded-lg overflow-hidden shadow-lg border border-gray-700"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="relative w-full h-full bg-gray-100 flex items-center justify-center">
-            <span className="text-gray-500">Interactive Map Coming Soon</span>
-            {/* Replace with actual map integration when ready */}
-          </div>
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.328623418453!2d77.02332597584146!3d10.932802556997377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba866bd6aaaaaab%3A0xc650b8a75e7b51f0!2sSri%20Eshwar%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1698579272386!5m2!1sen!2sin" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Sri Eshwar College of Engineering Map"
+          ></iframe>
         </motion.div>
       </div>
     </section>

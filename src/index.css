@@ -9,7 +9,7 @@
     scroll-behavior: smooth;
   }
   
-  body {
+body {
     @apply bg-white text-gray-900 font-inter;
   }
 

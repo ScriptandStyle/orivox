@@ -9,11 +9,14 @@ import IdeationLabPage from './pages/IdeationLabPage';
 import TransparentDisplayPage from './pages/TransparentDisplayPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
+import CrystalViewPitchDeck from './pages/CrystalViewPitchDeck';
+import ImmersiLearnPage from './pages/ImmersiLearnPage';
+import ExploreExoPage from './pages/ExploreExoPage';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-gray-900 text-gray-100">
         <Navbar />
         <main>
           <Routes>
@@ -23,7 +26,10 @@ function App() {
             <Route path="/scriptstyle" element={<ScriptStylePage />} />
             <Route path="/ideation-lab" element={<IdeationLabPage />} />
             <Route path="/transparent-display" element={<TransparentDisplayPage />} />
+            <Route path="/crystalview-pitch" element={<CrystalViewPitchDeck />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/immersilearn" element={<ImmersiLearnPage />} />
+            <Route path="/exploreexo" element={<ExploreExoPage />} />
           </Routes>
         </main>
         <Footer />
