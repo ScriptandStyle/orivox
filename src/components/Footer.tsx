@@ -81,8 +81,9 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {/* Company Info */}
             <div>
-              <Link to="/" className="inline-block">
-                <img src="/images/orivox-logo.svg" alt="ORIVOX" className="h-12" />
+              <Link to="/" className="inline-block flex items-center">
+                <img src="/images/orivox-logo.svg" alt="ORIVOX" className="h-12 mr-2" />
+                <span className="text-2xl font-orbitron font-bold gradient-text">ORIVOX</span>
               </Link>
               <p className="text-gray-600 mt-2">
                 Pioneering the future of technology

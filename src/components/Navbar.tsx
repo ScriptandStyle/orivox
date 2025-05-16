@@ -47,6 +47,7 @@ const Navbar = () => {
                 alt="ORIVOX" 
                 className="h-10 mr-2" 
               />
+              <span className="text-2xl font-orbitron font-bold gradient-text">ORIVOX</span>
             </Link>
           </motion.div>
 
