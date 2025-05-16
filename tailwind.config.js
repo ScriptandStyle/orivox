@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'cool-blue': '#a3d8f4',
-        'electric-violet': '#7f5af0',
+        'cool-blue': '#4169E1',
+        'electric-violet': '#8A2BE2',
         'accent-neon': '#00f0ff',
       },
       fontFamily: {
