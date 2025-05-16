@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350">
+  <!-- Hexagon Logo -->
+  <g fill="none" stroke="#CCCCCC" stroke-width="3">
+    <path d="M175,50 L75,150 L175,250 L275,150 L175,50 Z" />
+    <path d="M175,70 L95,150 L175,230 L255,150 L175,70 Z" />
+    <path d="M175,90 L115,150 L175,210 L235,150 L175,90 Z" />
+    <path d="M175,110 L135,150 L175,190 L215,150 L175,110 Z" />
+  </g>
+  
+  <!-- ORIVOX Text -->
+  <g fill="none" stroke="#CCCCCC" stroke-width="3">
+    <!-- O -->
+    <circle cx="350" cy="150" r="70" />
+    
+    <!-- R -->
+    <path d="M440,80 L440,220 M440,80 L510,80 Q540,80 540,110 Q540,140 510,140 L440,140 L510,220" />
+    
+    <!-- I -->
+    <path d="M570,80 L570,220" />
+    
+    <!-- V -->
+    <path d="M600,80 L635,220 L670,80" />
+    
+    <!-- O -->
+    <circle cx="715" cy="150" r="70" />
+    
+    <!-- X -->
+    <path d="M780,80 L850,220 M780,220 L850,80" />
+  </g>
+  
+  <!-- Tagline -->
+  <text x="305" y="270" fill="#CCCCCC" font-family="Arial" font-size="24" letter-spacing="2">
+    SEE BEYOND. BUILD BEYOND. ORIVOX.
+  </text>
+</svg> 

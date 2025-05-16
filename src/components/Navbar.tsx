@@ -39,9 +39,14 @@ const Navbar = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
+            className="flex items-center"
           >
-            <Link to="/" className="text-2xl font-orbitron font-bold gradient-text">
-              ORIVOX
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/images/orivox-logo.svg" 
+                alt="ORIVOX" 
+                className="h-10 mr-2" 
+              />
             </Link>
           </motion.div>
 
