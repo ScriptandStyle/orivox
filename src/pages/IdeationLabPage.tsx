@@ -191,7 +191,7 @@ const IdeationLab = () => {
           variants={headerVariants}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-500 to-cyan-400">
-            Script&Style Ideation Lab
+            Orivox's Ideation Lab
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
             Where Ideas Come Alive

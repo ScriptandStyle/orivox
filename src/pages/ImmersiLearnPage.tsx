@@ -1,21 +1,30 @@
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import FloatingContactButton from '../components/FloatingContactButton';
+import { useInView } from 'react-intersection-observer';
 
 const ImmersiLearnPage = () => {
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [0, -300]);
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   useEffect(() => {
     // Scroll to top when page loads
     window.scrollTo(0, 0);
   }, []);
 
-  // Animation variants
+  // Enhanced animation variants
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: { 
-        duration: 0.6
+        duration: 0.8,
+        ease: "easeOut"
       }
     }
   };
@@ -25,12 +34,24 @@ const ImmersiLearnPage = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.15,
+        delayChildren: 0.2
       }
     }
   };
 
-  const pulseAnimation = {
+  const floatingAnimation = {
+    animate: {
+      y: [0, -20, 0],
+      transition: {
+        duration: 4,
+        ease: "easeInOut",
+        repeat: Infinity
+      }
+    }
+  };
+
+  const hologramAnimation = {
     animate: {
       scale: [1, 1.05, 1],
       opacity: [0.7, 1, 0.7],
@@ -73,29 +94,41 @@ const ImmersiLearnPage = () => {
 
   return (
     <div className="bg-gray-900 text-gray-100 min-h-screen overflow-hidden relative">
-      {/* Animated Background Elements */}
+      {/* Enhanced Animated Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Tech Grid Background */}
-        <div className="tech-grid"></div>
+        <motion.div 
+          className="tech-grid"
+          style={{ y }}
+          animate={{
+            backgroundPosition: ['0% 0%', '100% 100%'],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "linear"
+          }}
+        />
         
-        {/* Floating Particles */}
+        {/* Enhanced Floating Particles */}
         <div className="particles-container">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(30)].map((_, i) => (
             <motion.div
               key={i}
               className="particle"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 10 + 5}px`,
-                height: `${Math.random() * 10 + 5}px`,
+                width: `${Math.random() * 15 + 5}px`,
+                height: `${Math.random() * 15 + 5}px`,
                 background: `rgba(${Math.random() * 100 + 100}, ${Math.random() * 100 + 100}, ${Math.random() * 255}, ${Math.random() * 0.5 + 0.2})`,
-                boxShadow: `0 0 ${Math.random() * 10 + 5}px rgba(${Math.random() * 100 + 100}, ${Math.random() * 100 + 100}, ${Math.random() * 255}, ${Math.random() * 0.5 + 0.3})`,
+                boxShadow: `0 0 ${Math.random() * 15 + 5}px rgba(${Math.random() * 100 + 100}, ${Math.random() * 100 + 100}, ${Math.random() * 255}, ${Math.random() * 0.5 + 0.3})`,
               }}
               animate={{
-                x: [0, Math.random() * 100 - 50],
-                y: [0, Math.random() * 100 - 50],
+                x: [0, Math.random() * 200 - 100],
+                y: [0, Math.random() * 200 - 100],
                 opacity: [Math.random() * 0.5 + 0.2, Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.2],
+                scale: [1, Math.random() * 0.5 + 1, 1],
               }}
               transition={{
                 duration: Math.random() * 20 + 10,
@@ -106,38 +139,42 @@ const ImmersiLearnPage = () => {
             />
           ))}
         </div>
-        
-        {/* Glowing Orbs */}
+
+        {/* Enhanced Glowing Orbs */}
         <motion.div 
-          className="absolute -left-40 top-20 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl"
+          className="absolute -left-40 top-20 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        ></motion.div>
-        <motion.div 
-          className="absolute -right-40 bottom-20 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3],
+            x: [0, 50, 0],
+            y: [0, 30, 0],
           }}
           transition={{
             duration: 10,
             repeat: Infinity,
             ease: "easeInOut"
           }}
-        ></motion.div>
+        />
+        <motion.div 
+          className="absolute -right-40 bottom-20 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3],
+            x: [0, -50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
       </div>
       
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+      {/* Enhanced Hero Section */}
+      <section className="relative py-32 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2">
               <motion.div
                 initial="hidden"
@@ -146,33 +183,41 @@ const ImmersiLearnPage = () => {
                 className="text-center lg:text-left"
               >
                 <motion.h1 
-                  className="text-5xl md:text-6xl font-bold mb-6 font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-600"
+                  className="text-6xl md:text-7xl font-bold mb-8 font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-600"
                   variants={fadeIn}
                 >
                   ImmersiLearn
                 </motion.h1>
                 <motion.p 
-                  className="text-2xl font-light mb-8 text-purple-200"
+                  className="text-3xl font-light mb-8 text-purple-200"
                   variants={fadeIn}
                 >
-                  Personalized AR/VR Learning Assistant for the Future of Education
+                  Personalized AR/VR Learning Assistant
                 </motion.p>
                 <motion.p 
-                  className="text-lg text-gray-300 mb-10 max-w-xl mx-auto lg:mx-0"
+                  className="text-xl text-gray-300 mb-12 max-w-xl mx-auto lg:mx-0"
                   variants={fadeIn}
                 >
                   Revolutionize Learning. Make It Personal. Make It Fun.
                 </motion.p>
                 <motion.div 
-                  className="flex flex-wrap gap-4 justify-center lg:justify-start"
+                  className="flex flex-wrap gap-6 justify-center lg:justify-start"
                   variants={fadeIn}
                 >
-                  <button className="btn bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white border-0 hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 ease-out">
+                  <motion.button 
+                    className="btn btn-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white border-0 px-8 shadow-lg shadow-purple-700/30 hover:shadow-purple-600/50 transition-all duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     Try ImmersiLearn
-                  </button>
-                  <button className="btn glass text-purple-300 border-purple-400/30 hover:border-purple-400/50 hover:text-purple-200 hover:shadow-lg hover:shadow-purple-900/30 transition-all duration-300 ease-out">
+                  </motion.button>
+                  <motion.button 
+                    className="btn btn-lg glass text-purple-300 border-purple-400/30 px-8 hover:text-white hover:border-purple-400/50 hover:shadow-lg hover:shadow-purple-900/20 transition-all duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     For Educators
-                  </button>
+                  </motion.button>
                 </motion.div>
               </motion.div>
             </div>
@@ -184,7 +229,7 @@ const ImmersiLearnPage = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
               >
-                {/* Futuristic AR/VR visualization */}
+                {/* Enhanced Hologram Visualization */}
                 <div className="hologram-container">
                   <div className="hologram-rings">
                     <motion.div 
@@ -192,49 +237,57 @@ const ImmersiLearnPage = () => {
                       animate={{
                         rotateX: 360,
                         rotateY: 180,
+                        scale: [1, 1.1, 1],
                       }}
                       transition={{
                         duration: 20,
                         repeat: Infinity,
                         ease: "linear"
                       }}
-                    ></motion.div>
+                    />
                     <motion.div 
                       className="ring ring-2"
                       animate={{
                         rotateY: 360,
                         rotateX: 180,
+                        scale: [1, 1.2, 1],
                       }}
                       transition={{
                         duration: 30,
                         repeat: Infinity,
                         ease: "linear"
                       }}
-                    ></motion.div>
+                    />
                     <motion.div 
                       className="ring ring-3"
                       animate={{
-                        rotate: 360
+                        rotate: 360,
+                        scale: [1, 1.15, 1],
                       }}
                       transition={{
                         duration: 25,
                         repeat: Infinity,
                         ease: "linear"
                       }}
-                    ></motion.div>
+                    />
                   </div>
                   <motion.div 
                     className="hologram-core"
                     animate={{
-                      scale: [1, 1.1, 1],
+                      scale: [1, 1.2, 1],
                       opacity: [0.7, 1, 0.7],
+                      boxShadow: [
+                        '0 0 20px rgba(147, 51, 234, 0.5)',
+                        '0 0 40px rgba(147, 51, 234, 0.8)',
+                        '0 0 20px rgba(147, 51, 234, 0.5)',
+                      ],
                     }}
                     transition={{
                       duration: 3,
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
-                  ></motion.div>
+                  />
                 </div>
               </motion.div>
             </div>
@@ -762,8 +815,97 @@ const ImmersiLearnPage = () => {
         </div>
       </section>
 
-      {/* Additional CSS for enhanced effects */}
+      {/* Enhanced CSS for better effects */}
       <style>{`
+        .tech-grid {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            linear-gradient(rgba(75, 0, 130, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(75, 0, 130, 0.1) 1px, transparent 1px);
+          background-size: 30px 30px;
+          opacity: 0.5;
+          animation: grid-pulse 15s infinite alternate ease-in-out;
+        }
+        
+        @keyframes grid-pulse {
+          0% {
+            opacity: 0.3;
+            background-size: 30px 30px;
+          }
+          50% {
+            opacity: 0.5;
+            background-size: 32px 32px;
+          }
+          100% {
+            opacity: 0.3;
+            background-size: 30px 30px;
+          }
+        }
+
+        .hologram-container {
+          position: relative;
+          width: 400px;
+          height: 400px;
+          margin: 0 auto;
+        }
+
+        .hologram-rings {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+        }
+
+        .ring {
+          position: absolute;
+          border: 2px solid rgba(147, 51, 234, 0.5);
+          border-radius: 50%;
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+        }
+
+        .ring-1 {
+          border-color: rgba(147, 51, 234, 0.3);
+          transform: rotateX(60deg);
+        }
+
+        .ring-2 {
+          border-color: rgba(79, 70, 229, 0.3);
+          transform: rotateY(60deg);
+        }
+
+        .ring-3 {
+          border-color: rgba(236, 72, 153, 0.3);
+          transform: rotateZ(60deg);
+        }
+
+        .hologram-core {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 100px;
+          height: 100px;
+          background: radial-gradient(circle, rgba(147, 51, 234, 0.8) 0%, rgba(79, 70, 229, 0.4) 100%);
+          border-radius: 50%;
+          filter: blur(5px);
+        }
+
+        .particle {
+          position: absolute;
+          border-radius: 50%;
+          pointer-events: none;
+        }
+
+        .glass-card {
+          background: rgba(17, 24, 39, 0.7);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
         .tech-grid-enhanced {
           position: absolute;
           inset: 0;
