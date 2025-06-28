@@ -188,9 +188,10 @@ const Contact = () => {
                 Address
               </h4>
               <address className="not-italic text-gray-400 ml-7">
-                Sri Eshwar College of Engineering<br />
-                Coimbatore, Coimbatore<br />
-                Tamil Nadu 641202<br />
+                SRI ESHWAR COLLEGE OF ENGINEERING<br />
+                Kondampatti Post, Vadasithur via<br />
+                Kinathukadavu, Coimbatore - 641202<br />
+                Tamil Nadu, India<br />
                 <span className="text-sm text-gray-500">Plus Code: R3H6+56 Kondampatty, Tamil Nadu</span>
               </address>
             </div>
@@ -265,13 +266,13 @@ const Contact = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.328623418453!2d77.02332597584146!3d10.932802556997377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba866bd6aaaaaab%3A0xc650b8a75e7b51f0!2sSri%20Eshwar%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1698579272386!5m2!1sen!2sin" 
-            width="100%" 
-            height="100%" 
-            style={{ border: 0 }} 
-            allowFullScreen 
-            loading="lazy" 
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.7829807748317!2d77.05794187412262!3d10.827913258243795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba84ee37569ae7f%3A0x3c5b1824b6e79192!2sSri%20Eshwar%20College%20of%20Engineering%2C%20Coimbatore!5e0!3m2!1sen!2sin!4v1751116819782!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title="Sri Eshwar College of Engineering Map"
           ></iframe>
