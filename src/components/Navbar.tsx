@@ -27,10 +27,12 @@ const Navbar = () => {
             className="flex items-center"
           >
             <Link to="/" className="flex items-center">
-              <div className="text-3xl font-orbitron font-bold flex">
-                <span style={{ color: '#a78bfa' }}>ORI</span>
-                <span style={{ color: '#818cf8' }}>VOX</span>
-              </div>
+              <img 
+                src="/logo.jpg" 
+                alt="Orivox Logo" 
+                className="h-8 sm:h-10 w-auto rounded-lg object-contain"
+                loading="eager"
+              />
             </Link>
           </motion.div>
 
