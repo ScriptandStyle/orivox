@@ -1,22 +1,48 @@
-/* Space Animations and Effects */
+/* Enhanced Space Animations and Effects for ExploreEXO */
 
-/* Nebula Background */
+/* Enhanced Nebula Background */
 .nebula-bg {
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(circle at 30% 50%, rgba(76, 29, 149, 0.2) 0%, rgba(30, 64, 175, 0) 70%),
-    radial-gradient(circle at 70% 30%, rgba(147, 51, 234, 0.2) 0%, rgba(30, 64, 175, 0) 60%),
-    radial-gradient(circle at 50% 80%, rgba(6, 182, 212, 0.2) 0%, rgba(30, 64, 175, 0) 70%);
-  filter: blur(40px);
-  opacity: 0.6;
+  background-image: radial-gradient(
+      circle at 30% 50%,
+      rgba(76, 29, 149, 0.3) 0%,
+      rgba(30, 64, 175, 0) 70%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(147, 51, 234, 0.25) 0%,
+      rgba(30, 64, 175, 0) 60%
+    ),
+    radial-gradient(
+      circle at 50% 80%,
+      rgba(6, 182, 212, 0.2) 0%,
+      rgba(30, 64, 175, 0) 70%
+    ),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(236, 72, 153, 0.15) 0%,
+      transparent 50%
+    );
+  filter: blur(50px);
+  opacity: 0.7;
   mix-blend-mode: screen;
+}
+
+/* Radial gradient utility */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
 }
 
 /* Star Twinkling Animation */
 @keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .star {
@@ -25,7 +51,9 @@
   background-color: white;
 }
 
-.stars-small, .stars-medium, .stars-large {
+.stars-small,
+.stars-medium,
+.stars-large {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -87,7 +115,11 @@
 .shooting-star {
   position: absolute;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
   animation: shootingStar 3s ease-in-out infinite;
   animation-delay: calc(var(--delay) * 1s);
   transform-origin: left;
@@ -110,8 +142,13 @@
 
 /* Floating Objects Animation */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .floating-object {
@@ -148,13 +185,18 @@
 
 .cosmic-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 25px -5px rgba(76, 29, 149, 0.2), 0 10px 10px -5px rgba(76, 29, 149, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(76, 29, 149, 0.2),
+    0 10px 10px -5px rgba(76, 29, 149, 0.1);
 }
 
 /* Planet rotation */
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .planet-rotate {
@@ -192,19 +234,102 @@
 }
 
 .btn-glow::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: -2px;
-  background: linear-gradient(45deg, 
-    rgba(56, 189, 248, 0) 0%, 
-    rgba(56, 189, 248, 0.3) 50%, 
-    rgba(56, 189, 248, 0) 100%);
+  background: linear-gradient(
+    45deg,
+    rgba(56, 189, 248, 0) 0%,
+    rgba(56, 189, 248, 0.3) 50%,
+    rgba(56, 189, 248, 0) 100%
+  );
   z-index: -1;
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
-} 
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* Enhanced cosmic animations for ExploreEXO */
+@keyframes cosmicGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes galaxyRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes starPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes cosmicParticle {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) translateY(-20px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) translateY(-40px);
+  }
+}
+
+/* Utility classes for cosmic effects */
+.cosmic-glow {
+  animation: cosmicGlow 4s ease-in-out infinite;
+}
+
+.galaxy-rotate {
+  animation: galaxyRotate 120s linear infinite;
+}
+
+.star-pulse {
+  animation: starPulse 3s ease-in-out infinite;
+}
+
+.cosmic-particle {
+  animation: cosmicParticle 3s ease-in-out infinite;
+}
+
+/* Enhanced glassmorphism effects */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card-dark {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}

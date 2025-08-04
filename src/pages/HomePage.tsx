@@ -1,22 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import Hero from '../components/Hero';
-import FloatingContactButton from '../components/FloatingContactButton';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Player } from "@lottiefiles/react-lottie-player";
+import { motion, AnimatePresence } from "framer-motion";
+import FloatingContactButton from "../components/FloatingContactButton";
+import Hero from "../components/Hero";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('ventures');
-  const [showContent, setShowContent] = useState(false);
+  const [showContent, setShowContent] = useState(true);
 
   useEffect(() => {
-    // Reset animation when tab changes
     setShowContent(false);
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 100);
-    
+    const timer = setTimeout(() => setShowContent(true), 100);
     return () => clearTimeout(timer);
   }, [activeTab]);
+
+  // Helper function to render division lottie animations (currently unused but kept for future use)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const renderDivisionLottie = (divisionId: number, className: string = "") => {
+    const getAnimationSrc = () => {
+      switch (divisionId) {
+        case 1:
+          return require("../asset/TRANS.json"); // Crystal View - Transparent displays
+        case 2:
+          return require("../asset/SandS.json"); // Script&Style - Web development
+        case 3:
+          return require("../asset/idea.json"); // Ideation Hub - Innovation
+        default:
+          return require("../asset/Service.json"); // Default service animation
+      }
+    };
+
+    return (
+      <div className={`${className} w-8 h-8 flex items-center justify-center`}>
+        <Player
+          autoplay
+          loop
+          src={getAnimationSrc()}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
+    );
+  };
 
   const projects = [
     {
@@ -56,22 +81,22 @@ const HomePage = () => {
 
   const milestones = [
     {
-      year: '2020',
+      year: '2024',
       title: 'Founding Vision',
       description: 'Orivox was established with a mission to bridge imagination and reality.'
     },
     {
-      year: '2021',
-      title: 'CrystalView Prototype',
-      description: 'Developed our first transparent display proof of concept.'
+      year: '2024',
+      title: 'CrystalView Ideations',
+      description: 'Developing our first transparent display proof of concept.'
     },
     {
-      year: '2022',
+      year: '2024',
       title: 'Script&Style Launch',
       description: 'Launched our student-centric freelancing platform.'
     },
     {
-      year: '2023',
+      year: '2025',
       title: 'Ideation Lab Formation',
       description: 'Created our healthcare and space innovation hub.'
     }
@@ -450,63 +475,261 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-800 to-indigo-800 text-white w-full">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* CTA Section - Enhanced with glassmorphic design */}
+      <section className="relative py-24 overflow-hidden w-full">
+        {/* Dynamic Background with Multiple Layers */}
+        <div className="absolute inset-0">
+          {/* Primary gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900"></div>
+
+          {/* Animated gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/30 via-violet-600/30 to-purple-600/30 animate-pulse"></div>
+
+          {/* Geometric pattern overlay */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 cta-geometric-pattern"></div>
+          </div>
+
+          {/* Floating particles effect */}
+          <div className="absolute inset-0">
+            <div className="absolute w-2 h-2 bg-white/20 rounded-full floating-particle left-[20%] top-[30%]"></div>
+            <div className="absolute w-2 h-2 bg-white/20 rounded-full floating-particle left-[35%] top-[50%]"></div>
+            <div className="absolute w-2 h-2 bg-white/20 rounded-full floating-particle left-[50%] top-[30%]"></div>
+            <div className="absolute w-2 h-2 bg-white/20 rounded-full floating-particle left-[65%] top-[70%]"></div>
+            <div className="absolute w-2 h-2 bg-white/20 rounded-full floating-particle left-[80%] top-[50%]"></div>
+            <div className="absolute w-2 h-2 bg-white/20 rounded-full floating-particle left-[95%] top-[30%]"></div>
+          </div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            className="text-center max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-center max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-orbitron">Ready to Shape the Future Together?</h2>
-            <p className="text-xl mb-8">
-              Whether you're interested in our display technology, student freelancing platform, or innovation labs — we're ready to collaborate.
-            </p>
-            <motion.div 
-              className="flex flex-wrap justify-center gap-4"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <Link to="/about" className="btn btn-lg glass text-white border-white hover:bg-white/20">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-                Learn More About Orivox
-              </Link>
-            </motion.div>
+            {/* Glassmorphic container */}
+            <div className="backdrop-blur-xl bg-white/10 rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-nunito text-white">
+                  Ready to Shape the{' '}
+                  <span className="bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+                    Future Together?
+                  </span>
+                </h2>
+              </motion.div>
+
+              <motion.p
+                className="text-xl md:text-2xl mb-10 text-gray-200 leading-relaxed font-light"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                Whether you're interested in our display technology, student freelancing platform, or innovation labs — we're ready to collaborate and build tomorrow's solutions today.
+              </motion.p>
+
+              <motion.div
+                className="flex flex-wrap justify-center gap-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <Link
+                    to="/about"
+                    className="group relative inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 rounded-full overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-violet-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <span className="relative z-10">Discover Orivox</span>
+                  </Link>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <Link
+                    to="/contact"
+                    className="group relative inline-flex items-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full backdrop-blur-sm hover:border-white/50 hover:bg-white/10 transition-all duration-300"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    <span>Start Conversation</span>
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>
-      
-      {/* Partners Logos Carousel */}
-      <section className="py-10 bg-gray-50 w-full">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h3 className="text-xl font-semibold text-gray-800">Trusted by Innovative Organizations</h3>
+
+      {/* Partners Section - Enhanced with modern design */}
+      <section className="relative py-16 overflow-hidden w-full">
+        {/* Background with subtle gradient and pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/50 to-violet-50/30"></div>
+
+          {/* Subtle geometric pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_#4f46e5_1px,_transparent_0)] bg-[length:40px_40px]"></div>
           </div>
-          <motion.div 
-            className="flex justify-center"
+
+          {/* Floating accent elements */}
+          <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-violet-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Section Header */}
+          <motion.div
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="carousel carousel-center p-4 space-x-4 bg-white rounded-box max-w-4xl w-full shadow-sm">
-              {[1, 2, 3, 4, 5].map((item) => (
-                <motion.div 
-                  key={item} 
-                  className="carousel-item"
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-violet-100 rounded-full mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-sm font-semibold text-blue-700">Partnerships</span>
+              </div>
+            </motion.div>
+
+            <motion.h3
+              className="text-3xl md:text-4xl font-bold text-gray-800 font-nunito mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              Trusted by{' '}
+              <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-purple-600 bg-clip-text text-transparent">
+                Innovative Organizations
+              </span>
+            </motion.h3>
+
+            <motion.p
+              className="text-gray-600 max-w-2xl mx-auto text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              Join the growing community of forward-thinking companies and institutions that choose Orivox for cutting-edge solutions.
+            </motion.p>
+          </motion.div>
+
+          {/* Partners Grid */}
+          <motion.div
+            className="flex justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-6xl w-full">
+              {[
+                { name: 'TechCorp', category: 'Technology' },
+                { name: 'EduInnovate', category: 'Education' },
+                { name: 'HealthTech Pro', category: 'Healthcare' },
+                { name: 'SpaceVentures', category: 'Aerospace' },
+                { name: 'RetailNext', category: 'Retail' },
+                { name: 'FinanceFlow', category: 'Finance' },
+                { name: 'GreenEnergy', category: 'Sustainability' },
+                { name: 'MediaStream', category: 'Media' },
+                { name: 'LogiChain', category: 'Logistics' },
+                { name: 'CloudScale', category: 'Cloud Services' }
+              ].map((partner, index) => (
+                <motion.div
+                  key={index}
+                  className="group relative"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 * index }}
+                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
                 >
-                  <div className="flex items-center justify-center w-40 h-20 bg-gray-100 rounded-lg">
-                    <span className="text-gray-500 font-semibold">Partner {item}</span>
+                  {/* Glassmorphic partner card */}
+                  <div className="relative backdrop-blur-sm bg-white/70 rounded-2xl p-6 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:bg-white/80">
+                    {/* Gradient border effect on hover */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 via-violet-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-sm"></div>
+
+                    {/* Partner logo placeholder */}
+                    <div className="flex items-center justify-center h-16 mb-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-violet-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                        {partner.name.charAt(0)}
+                      </div>
+                    </div>
+
+                    {/* Partner info */}
+                    <div className="text-center">
+                      <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-blue-700 transition-colors duration-300">
+                        {partner.name}
+                      </h4>
+                      <p className="text-xs text-gray-500 font-medium">
+                        {partner.category}
+                      </p>
+                    </div>
+
+                    {/* Hover effect indicator */}
+                    <div className="absolute top-2 right-2 w-2 h-2 bg-gradient-to-r from-blue-500 to-violet-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                 </motion.div>
               ))}
             </div>
+          </motion.div>
+
+          {/* Call to action for partnerships */}
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+          >
+            <p className="text-gray-600 mb-6">
+              Interested in partnering with us?
+            </p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                to="/contact"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-full hover:from-violet-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2v-6a2 2 0 012-2h2m-4-3v9a2 2 0 002 2h9a2 2 0 002-2V9a2 2 0 00-2-2H9a2 2 0 00-2 2z" />
+                </svg>
+                Let's Connect
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -517,4 +740,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage; 
+export default HomePage;

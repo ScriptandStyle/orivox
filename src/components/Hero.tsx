@@ -12,7 +12,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden w-full bg-gray-900"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden w-full bg-gray-900 pt-20"
       id="hero"
     >
       {/* Lottie Background */}
@@ -119,59 +119,7 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Stats - Static Version */}
-        <div
-          className="fixed bottom-0 left-0 right-0 z-20 w-full bg-gray-800/90 backdrop-blur-md border-t border-gray-700 shadow-lg"
-        >
-          <div className="container mx-auto">
-            <div className="grid grid-cols-3 max-w-4xl mx-auto">
-              <div className="stat text-center py-4 hover:bg-gray-700">
-                <div className="stat-title text-sm text-gray-400">Ventures</div>
-                <div className="flex items-center justify-center gap-2">
-                  <div className="text-4xl font-bold text-indigo-400">
-                    3
-                  </div>
-                  <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="stat-desc text-xs text-gray-400">Unique Business Domains</div>
-              </div>
-              
-              <div className="stat text-center py-4 hover:bg-gray-700">
-                <div className="stat-title text-sm text-gray-400">Innovation</div>
-                <div className="flex items-center justify-center gap-2">
-                  <div className="text-4xl font-bold text-blue-400">
-                    100%
-                  </div>
-                  <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="stat-desc text-xs text-gray-400">Focus on Future Tech</div>
-              </div>
-              
-              <div className="stat text-center py-4 hover:bg-gray-700">
-                <div className="stat-title text-sm text-gray-400">Solutions</div>
-                <div className="flex items-center justify-center gap-2">
-                  <div className="text-4xl font-bold text-teal-400">
-                    ∞
-                  </div>
-                  <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="stat-desc text-xs text-gray-400">Limitless Possibilities</div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
   );

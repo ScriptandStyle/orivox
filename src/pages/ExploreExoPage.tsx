@@ -1,25 +1,33 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
+import Lottie from 'lottie-react';
 import FloatingContactButton from '../components/FloatingContactButton';
+
+// Import Lottie animations
+import planetOrbitAnimation from '../assets/animations/planet-orbit.json';
+import telescopeScanAnimation from '../assets/animations/telescope-scan.json';
+import rocketLaunchAnimation from '../assets/animations/rocket-launch.json';
 
 const ExploreExoPage = () => {
   const mainRef = useRef<HTMLDivElement>(null);
+  const [currentFactIndex, setCurrentFactIndex] = useState(0);
   const { scrollYProgress } = useScroll({
     target: mainRef,
     offset: ["start start", "end end"]
   });
-  
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const starsOpacity = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6], [1, 0.8, 0.6, 0.4]);
-  
-  // Animation variants
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const starsOpacity = useTransform(scrollYProgress, [0, 0.3, 0.6, 1], [1, 0.8, 0.5, 0.2]);
+  const galaxyRotation = useTransform(scrollYProgress, [0, 1], [0, 360]);
+
+  // Enhanced Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.6 }
+      transition: { duration: 0.8, ease: "easeOut" }
     }
   };
 
@@ -28,7 +36,8 @@ const ExploreExoPage = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.15,
+        delayChildren: 0.1
       }
     }
   };
@@ -36,22 +45,22 @@ const ExploreExoPage = () => {
   const floatAnimation = {
     initial: { y: 0 },
     animate: {
-      y: [0, -15, 0],
+      y: [0, -20, 0],
       transition: {
-        duration: 6,
+        duration: 8,
         repeat: Infinity,
         ease: "easeInOut"
       }
     }
   };
 
-  const pulseAnimation = {
-    initial: { scale: 1, opacity: 0.7 },
+  const pulseGlow = {
+    initial: { scale: 1, opacity: 0.6 },
     animate: {
-      scale: [1, 1.05, 1],
-      opacity: [0.7, 1, 0.7],
+      scale: [1, 1.1, 1],
+      opacity: [0.6, 1, 0.6],
       transition: {
-        duration: 3,
+        duration: 4,
         repeat: Infinity,
         ease: "easeInOut"
       }
@@ -63,50 +72,139 @@ const ExploreExoPage = () => {
     animate: {
       rotate: 360,
       transition: {
-        duration: 40,
+        duration: 50,
         repeat: Infinity,
         ease: "linear"
       }
     }
   };
 
-  // Exoplanet catalog data
+  const cosmicParticle = {
+    initial: { scale: 0, opacity: 0 },
+    animate: {
+      scale: [0, 1, 0],
+      opacity: [0, 1, 0],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  // Enhanced Exoplanet catalog with educational data
   const exoplanets = [
     {
       name: "Kepler-186f",
       type: "Super-Earth",
-      description: "Often called Earth's cousin, this exoplanet orbits within the habitable zone of its star.",
-      image: "/images/kepler-186f.jpg",
-      facts: ["Similar size to Earth", "Orbits a red dwarf star", "Could potentially support liquid water"],
+      description: "Often called Earth's cousin, this exoplanet orbits within the habitable zone of its red dwarf star.",
+      discoveryMethod: "Transit Method",
+      facts: ["1.11 times Earth's radius", "Receives similar energy from its star as Earth", "Could have liquid water oceans"],
       distance: "500 light years",
-      yearDiscovered: 2014
+      yearDiscovered: 2014,
+      temperature: "Unknown",
+      funFact: "If you lived here, you'd see a red sunset every day!",
+      color: "from-green-500 to-blue-600"
     },
     {
       name: "TRAPPIST-1e",
       type: "Terrestrial",
-      description: "Part of a system of seven Earth-sized planets, several of which could harbor water.",
-      image: "/images/trappist-1e.jpg",
-      facts: ["Rocky planet", "Part of a 7-planet system", "Potentially habitable"],
+      description: "Part of an amazing system of seven Earth-sized planets orbiting an ultra-cool dwarf star.",
+      discoveryMethod: "Transit Method",
+      facts: ["Rocky composition", "Part of a 7-planet system", "Likely tidally locked"],
       distance: "40 light years",
-      yearDiscovered: 2017
+      yearDiscovered: 2017,
+      temperature: "-22°C to -1°C",
+      funFact: "Three of its sibling planets might also have water!",
+      color: "from-orange-500 to-red-600"
     },
     {
       name: "HD 189733 b",
       type: "Hot Jupiter",
-      description: "A gas giant with deep blue color, possibly from glass particles in its atmosphere.",
-      image: "/images/hd-189733b.jpg",
-      facts: ["Cobalt blue color", "Extreme weather", "Rains molten glass sideways"],
+      description: "A stunning cobalt blue gas giant with the most extreme weather in the known universe.",
+      discoveryMethod: "Transit Method",
+      facts: ["Cobalt blue color", "Winds up to 8,700 km/h", "Rains molten glass sideways"],
       distance: "63 light years",
-      yearDiscovered: 2005
+      yearDiscovered: 2005,
+      temperature: "1,200°C",
+      funFact: "The blue color comes from silicate particles in its atmosphere!",
+      color: "from-blue-600 to-indigo-800"
+    },
+    {
+      name: "TOI-700 d",
+      type: "Earth-sized",
+      description: "The first Earth-sized planet discovered in the habitable zone by NASA's TESS mission.",
+      discoveryMethod: "Transit Method",
+      facts: ["20% larger than Earth", "Receives 86% of Earth's stellar energy", "Potentially rocky"],
+      distance: "100 light years",
+      yearDiscovered: 2020,
+      temperature: "Unknown",
+      funFact: "It's tidally locked, so one side always faces its star!",
+      color: "from-cyan-500 to-blue-700"
+    },
+    {
+      name: "K2-18 b",
+      type: "Sub-Neptune",
+      description: "A planet where scientists have detected water vapor in its atmosphere - a major discovery!",
+      discoveryMethod: "Transit Method",
+      facts: ["2.2 times Earth's radius", "Water vapor detected", "8.6 times Earth's mass"],
+      distance: "124 light years",
+      yearDiscovered: 2015,
+      temperature: "-73°C to 47°C",
+      funFact: "It might have clouds and rain, just like Earth!",
+      color: "from-purple-500 to-pink-600"
     },
     {
       name: "55 Cancri e",
       type: "Super-Earth",
-      description: "A diamond planet! Scientists believe its surface could be covered in graphite and diamond.",
-      image: "/images/55-cancri-e.jpg",
-      facts: ["Surface could be made of diamond", "Very hot surface temperature", "Year lasts only 18 hours"],
+      description: "The famous 'diamond planet' - a world that might be covered in graphite and diamond!",
+      discoveryMethod: "Radial Velocity",
+      facts: ["Surface could be diamond", "2,000°C surface temperature", "Year lasts only 18 hours"],
       distance: "40 light years",
-      yearDiscovered: 2004
+      yearDiscovered: 2004,
+      temperature: "2,000°C",
+      funFact: "This planet is worth more than Earth's entire economy!",
+      color: "from-yellow-400 to-orange-600"
+    }
+  ];
+
+  // Mind-blowing space facts for the carousel
+  const spaceFacts = [
+    {
+      title: "Raining Diamonds",
+      fact: "On Neptune and Uranus, it literally rains diamonds! The extreme pressure turns carbon into diamond crystals.",
+      icon: "💎",
+      category: "Extreme Weather"
+    },
+    {
+      title: "Time Dilation",
+      fact: "If you spent a year on a planet orbiting a black hole, thousands of years could pass on Earth!",
+      icon: "⏰",
+      category: "Physics"
+    },
+    {
+      title: "Galactic Speed",
+      fact: "Our entire solar system is racing through space at 828,000 km/h around the Milky Way!",
+      icon: "🌌",
+      category: "Motion"
+    },
+    {
+      title: "Stellar Nurseries",
+      fact: "The Eagle Nebula creates 1,000 new stars every million years - it's a cosmic baby factory!",
+      icon: "⭐",
+      category: "Star Formation"
+    },
+    {
+      title: "Cosmic Distances",
+      fact: "Light from the nearest star (besides the Sun) takes 4.37 years to reach us - that's 41 trillion kilometers!",
+      icon: "🔭",
+      category: "Distance"
+    },
+    {
+      title: "Neutron Star Density",
+      fact: "A teaspoon of neutron star material would weigh 6 billion tons - as much as Mount Everest!",
+      icon: "🏔️",
+      category: "Density"
     }
   ];
 
@@ -155,24 +253,34 @@ const ExploreExoPage = () => {
   ];
 
   useEffect(() => {
-    // Initialize star field animation
+    // Initialize enhanced star field animation
     const createStars = () => {
       const stars = document.querySelectorAll('.star');
       stars.forEach(star => {
-        const duration = Math.random() * 1 + 1;
-        const delay = Math.random() * 2;
+        const duration = Math.random() * 2 + 1;
+        const delay = Math.random() * 3;
         gsap.to(star, {
-          opacity: Math.random() * 0.5 + 0.5,
+          opacity: Math.random() * 0.7 + 0.3,
           duration: duration,
           delay: delay,
           repeat: -1,
-          yoyo: true
+          yoyo: true,
+          ease: "power2.inOut"
         });
       });
     };
 
+    // Auto-scroll space facts
+    const factsInterval = setInterval(() => {
+      setCurrentFactIndex((prev) => (prev + 1) % spaceFacts.length);
+    }, 6000);
+
     createStars();
-  }, []);
+
+    return () => {
+      clearInterval(factsInterval);
+    };
+  }, [spaceFacts.length]);
 
   return (
     <div ref={mainRef} className="bg-gray-950 text-gray-100 overflow-hidden relative min-h-screen">
@@ -208,164 +316,204 @@ const ExploreExoPage = () => {
       
       {/* Main Content */}
       <div className="relative z-10">
-        {/* Hero Section with Parallax and Interactive Elements */}
-        <section className="min-h-screen relative py-10 overflow-hidden">
-          {/* Animated cosmic objects */}
-              <motion.div
-            className="absolute top-20 right-20 w-16 h-16 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 opacity-70 blur-sm"
-            variants={pulseAnimation}
+        {/* Hero Section - ExploreEXO: Beyond the Known */}
+        <section className="min-h-screen relative py-10 pt-32 overflow-hidden">
+          {/* Enhanced Cosmic Background Elements */}
+          <motion.div
+            className="absolute top-20 right-20 w-20 h-20 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 opacity-60"
+            variants={pulseGlow}
             initial="initial"
             animate="animate"
+            style={{ filter: 'blur(8px)' }}
           />
-          
-          <motion.div 
-            className="absolute bottom-40 left-10 w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-60 blur-sm"
-            variants={pulseAnimation}
+
+          <motion.div
+            className="absolute bottom-40 left-10 w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-50"
+            variants={pulseGlow}
             initial="initial"
             animate="animate"
-            style={{ animationDelay: "1s" }}
+            style={{ animationDelay: "1.5s", filter: 'blur(6px)' }}
           />
-          
-          <motion.div 
-            className="absolute top-1/3 left-1/4 w-2 h-24 bg-gradient-to-b from-transparent via-cyan-400 to-transparent opacity-70"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 0.7, height: 100 }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity, 
-              repeatType: "reverse" 
+
+          {/* Cosmic particles */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute w-1 h-1 bg-white rounded-full opacity-70"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+              }}
+              variants={cosmicParticle}
+              initial="initial"
+              animate="animate"
+              transition={{ delay: i * 0.5 }}
+            />
+          ))}
+
+          {/* Shooting stars */}
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-1 h-32 bg-gradient-to-b from-transparent via-cyan-300 to-transparent opacity-80"
+            initial={{ opacity: 0, scaleY: 0 }}
+            animate={{
+              opacity: [0, 1, 0],
+              scaleY: [0, 1, 0],
+              x: [0, 100, 200]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatDelay: 5,
+              ease: "easeOut"
             }}
           />
-          
+
           <div className="container mx-auto px-4 py-20">
             <div className="flex flex-col lg:flex-row items-center justify-between">
               <div className="lg:w-1/2 text-center lg:text-left mb-10 lg:mb-0">
                 <motion.div
                   variants={staggerContainer}
-                initial="hidden"
-                animate="visible"
+                  initial="hidden"
+                  animate="visible"
                 >
-                  <motion.div variants={fadeIn} className="inline-block mb-4">
-                    <div className="badge badge-accent text-xs font-semibold px-3 py-1.5 rounded-full bg-cyan-900 text-cyan-100 border-cyan-700">
-                      COSMIC ADVENTURE FOR CURIOUS MINDS
+                  <motion.div variants={fadeInUp} className="inline-block mb-6">
+                    <div className="badge badge-accent text-sm font-semibold px-4 py-2 rounded-full bg-gradient-to-r from-indigo-900 to-purple-900 text-cyan-100 border border-cyan-500/30 shadow-lg shadow-cyan-500/20">
+                      🌌 BEYOND THE KNOWN UNIVERSE
                     </div>
                   </motion.div>
-                  
-                <motion.h1 
-                  variants={fadeIn}
-                    className="text-6xl lg:text-7xl font-bold mb-6 font-orbitron tracking-tight"
-                >
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600">
-                      Cosmo<span className="text-white">Kids</span>
+
+                  <motion.h1
+                    variants={fadeInUp}
+                    className="text-5xl lg:text-8xl font-bold mb-8 font-orbitron tracking-tight leading-none"
+                  >
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-500">
+                      ExploreEXO
                     </span>
-                </motion.h1>
-                  
-                <motion.p 
-                  variants={fadeIn}
-                    className="text-2xl font-light mb-6 text-blue-200"
-                >
-                    Discover the Wonders of Exoplanets and Beyond!
-                </motion.p>
-                  
-                <motion.p 
-                  variants={fadeIn}
-                    className="text-gray-300 mb-8 text-lg max-w-lg"
-                >
-                    An interactive space journey for curious kids, students, and anyone fascinated by the mysteries of exoplanets and the universe.
-                </motion.p>
-                  
-                <motion.div 
-                  variants={fadeIn}
-                    className="flex flex-wrap gap-4 justify-center lg:justify-start"
-                >
-                    <button className="btn btn-primary bg-gradient-to-r from-blue-600 to-violet-600 border-0 text-white hover:from-blue-700 hover:to-violet-700 shadow-lg shadow-blue-700/20">
-                      <span className="mr-2">🚀</span> Start Exploring
-                  </button>
-                    <button className="btn btn-outline border-cyan-500 text-cyan-400 hover:bg-cyan-900/30 hover:text-cyan-300">
-                      <span className="mr-2">👨‍🚀</span> Join the Crew
-                  </button>
+                    <br />
+                    <span className="text-3xl lg:text-5xl text-gray-300 font-light">
+                      Beyond the Known
+                    </span>
+                  </motion.h1>
+
+                  <motion.p
+                    variants={fadeInUp}
+                    className="text-xl lg:text-2xl font-light mb-6 text-blue-200 leading-relaxed"
+                  >
+                    Unveil the mysteries of distant worlds and cosmic facts that defy imagination
+                  </motion.p>
+
+                  <motion.p
+                    variants={fadeInUp}
+                    className="text-gray-300 mb-10 text-lg max-w-2xl leading-relaxed"
+                  >
+                    Journey through space and time to discover exoplanets, mind-bending physics, and the incredible stories written in starlight. Every click reveals wonders that will reshape how you see the universe.
+                  </motion.p>
+
+                  <motion.div
+                    variants={fadeInUp}
+                    className="flex flex-wrap gap-6 justify-center lg:justify-start"
+                  >
+                    <button
+                      type="button"
+                      className="btn btn-lg bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 border-0 text-white hover:from-blue-700 hover:via-indigo-700 hover:to-violet-700 shadow-2xl shadow-blue-600/30 px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105"
+                    >
+                      <span className="mr-3 text-xl">🚀</span>
+                      Dive Into the Cosmos
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-lg btn-outline border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-900/40 hover:text-cyan-200 hover:border-cyan-300 px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105"
+                    >
+                      <span className="mr-3 text-xl">🔭</span>
+                      Discover More
+                    </button>
+                  </motion.div>
+
+                  {/* Add Lottie Animation for Hero */}
+                  <motion.div
+                    variants={fadeInUp}
+                    className="mt-8 flex justify-center lg:justify-start"
+                  >
+                    <div className="w-16 h-16">
+                      <Lottie
+                        animationData={rocketLaunchAnimation}
+                        loop={true}
+                        className="w-full h-full"
+                      />
+                    </div>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            </div>
-            
-              {/* Interactive Planet Animation */}
-              <div className="lg:w-1/2 relative h-96">
-              <motion.div 
-                  className="absolute w-full h-full"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1.5, delay: 0.5 }}
+              </div>
+
+              {/* Simplified Cosmic Animation with Lottie */}
+              <div className="lg:w-1/2 relative h-[500px] flex items-center justify-center">
+                <motion.div
+                  className="relative w-full h-full flex items-center justify-center"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 2, delay: 0.8 }}
                 >
-                  {/* Orbit rings */}
-                <motion.div 
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border border-blue-500/30"
-                    initial={{ rotateZ: 0 }}
-                    animate={{ rotateZ: 360 }}
-                    transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
+                  {/* Simplified background glow */}
+                  <motion.div
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-gradient-to-r from-blue-600/10 to-purple-600/10 blur-3xl"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  
-                <motion.div 
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-purple-500/20"
-                    initial={{ rotateZ: 0 }}
-                    animate={{ rotateZ: -360 }}
-                    transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-                  />
-                  
-                  {/* Main planet */}
-                  <motion.div 
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 shadow-2xl shadow-purple-900/50"
+
+                  {/* Main Lottie Planet Animation */}
+                  <motion.div
+                    className="relative z-10 w-64 h-64"
                     variants={floatAnimation}
                     initial="initial"
                     animate="animate"
                   >
-                    {/* Planet atmosphere */}
-                    <div className="absolute inset-0 rounded-full bg-cyan-500/10 backdrop-blur-md"></div>
-                    
-                    {/* Planet details/texture */}
-                    <div className="absolute inset-2 rounded-full overflow-hidden">
-                      <div className="absolute top-1/4 left-1/4 w-1/2 h-1/5 rounded-full bg-white/10 rotate-12"></div>
-                      <div className="absolute bottom-1/3 right-1/4 w-1/3 h-1/6 rounded-full bg-white/5 -rotate-12"></div>
-                    </div>
-                  </motion.div>
-                  
-                  {/* Orbiting moon */}
-                  <motion.div 
-                    className="absolute top-1/2 left-1/2 w-6 h-6"
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: 360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                >
-                <motion.div 
-                      className="absolute top-0 right-40 w-6 h-6 rounded-full bg-cyan-300 shadow-lg shadow-cyan-500/50"
-                      variants={pulseAnimation}
-                      initial="initial"
-                  animate="animate"
+                    <Lottie
+                      animationData={planetOrbitAnimation}
+                      loop={true}
+                      className="w-full h-full"
                     />
                   </motion.div>
-                  
-                  {/* Floating asteroid */}
-                <motion.div 
-                    className="absolute top-20 right-20 w-4 h-4 rounded-sm bg-gray-600"
-                    initial={{ y: 0, rotate: 0 }}
-                    animate={{ y: [0, 20, 0], rotate: 360 }}
-                    transition={{ 
-                      y: { duration: 10, repeat: Infinity, ease: "easeInOut" },
-                      rotate: { duration: 20, repeat: Infinity, ease: "linear" }
-                    }}
-                  />
-                  
-                  {/* Floating satellite */}
-                  <motion.div 
-                    className="absolute bottom-20 left-20 w-10 h-3 bg-gray-400 rounded-sm"
-                    initial={{ y: 0, x: 0 }}
-                    animate={{ y: [0, -10, 0], x: [0, 5, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+
+                  {/* Telescope Lottie Animation */}
+                  <motion.div
+                    className="absolute bottom-16 left-16 w-20 h-20"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5, duration: 1 }}
                   >
-                    <div className="absolute top-0 left-full w-6 h-1 bg-blue-400 rounded-sm"></div>
+                    <Lottie
+                      animationData={telescopeScanAnimation}
+                      loop={true}
+                      className="w-full h-full"
+                    />
                   </motion.div>
-              </motion.div>
+
+                  {/* Simplified cosmic particles */}
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={`particle-${i}`}
+                      className="absolute w-1 h-1 bg-cyan-400 rounded-full opacity-60"
+                      style={{
+                        top: `${30 + Math.random() * 40}%`,
+                        left: `${30 + Math.random() * 40}%`,
+                      }}
+                      animate={{
+                        opacity: [0.3, 1, 0.3],
+                        scale: [0.5, 1.5, 0.5]
+                      }}
+                      transition={{
+                        duration: 3 + Math.random() * 2,
+                        repeat: Infinity,
+                        delay: i * 0.5
+                      }}
+                    />
+                  ))}
+                </motion.div>
+              </div>
             </div>
-          </div>
 
             {/* Floating down indicator */}
           <motion.div
@@ -394,156 +542,339 @@ const ExploreExoPage = () => {
           </div>
         </section>
           
-        {/* Discover Exoplanets Section */}
-        <section className="py-20 relative">
-          {/* Decorative elements */}
-            <motion.div 
-            className="absolute -left-20 top-1/4 w-40 h-40 rounded-full bg-blue-600/10 blur-3xl"
-              animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.4, 0.3] 
-              }}
-              transition={{
-              duration: 8, 
-                repeat: Infinity,
+        {/* Exoplanet Discovery Section */}
+        <section className="py-24 relative">
+          {/* Enhanced Background Effects */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-indigo-950/20 to-gray-950"></div>
+
+          <motion.div
+            className="absolute -left-32 top-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-blue-600/15 to-cyan-600/10 blur-3xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.6, 0.3],
+              x: [0, 20, 0]
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
               repeatType: "reverse"
-              }}
-          />
-          
-            <motion.div 
-            className="absolute -right-20 bottom-1/4 w-40 h-40 rounded-full bg-purple-600/10 blur-3xl"
-              animate={{
-                scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3] 
-              }}
-              transition={{
-              duration: 10, 
-                repeat: Infinity,
-              repeatType: "reverse" 
             }}
           />
-          
-          <div className="container mx-auto px-4">
+
           <motion.div
-              initial={{ opacity: 0, y: 30 }}
+            className="absolute -right-32 bottom-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-purple-600/15 to-pink-600/10 blur-3xl"
+            animate={{
+              scale: [1, 1.4, 1],
+              opacity: [0.2, 0.5, 0.2],
+              x: [0, -30, 0]
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          />
+
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-              <div className="badge badge-secondary mb-4 text-xs font-semibold px-3 py-1.5 rounded-full bg-violet-800 text-violet-100 border-violet-700">
-                COSMIC EXPLORATION
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="text-center mb-20"
+            >
+              <div className="badge badge-secondary mb-6 text-sm font-semibold px-4 py-2 rounded-full bg-gradient-to-r from-violet-900 to-purple-900 text-violet-100 border border-violet-500/30 shadow-lg shadow-violet-500/20">
+                🪐 EXOPLANET DISCOVERY
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 font-orbitron">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-500 to-violet-600">
-                  Discover Exoplanets
+              <h2 className="text-5xl md:text-7xl font-bold mb-8 font-orbitron leading-tight">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-500">
+                  Worlds Beyond
+                </span>
+                <br />
+                <span className="text-3xl md:text-4xl text-gray-300 font-light">
+                  Our Solar System
                 </span>
               </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Explore amazing worlds beyond our solar system with interactive planet cards
-            </p>
-          </motion.div>
+              <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Journey to distant worlds where diamonds rain from the sky, where years last only hours,
+                and where the impossible becomes reality. Each planet tells a story written in starlight.
+              </p>
+            </motion.div>
 
-            {/* Interactive exoplanet cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {exoplanets.map((planet, index) => (
-              <motion.div
-                key={planet.name}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ 
-                    y: -12,
-                  transition: { duration: 0.3 }
-                }}
-                  className="card bg-gradient-to-b from-gray-800/80 to-gray-900/90 backdrop-blur-md rounded-lg overflow-hidden border border-purple-900/30 shadow-xl shadow-purple-900/20 group"
+            {/* Enhanced Interactive Exoplanet Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
+              {exoplanets.map((planet, index) => (
+                <motion.div
+                  key={planet.name}
+                  initial={{ opacity: 0, y: 60, rotateX: 15 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.15 }}
+                  viewport={{ once: true }}
+                  whileHover={{
+                    y: -15,
+                    scale: 1.02,
+                    transition: { duration: 0.4, ease: "easeOut" }
+                  }}
+                  className="group relative"
                 >
-                  <div className="relative h-48 overflow-hidden">
-                    {/* Planet image or placeholder */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-900/20 flex items-center justify-center">
-                      <motion.div 
-                        className="w-28 h-28 rounded-full bg-gradient-to-br from-indigo-500 to-purple-700 shadow-lg shadow-purple-800/50"
-                        initial={{ scale: 0.9, rotate: 0 }}
-                        animate={{ scale: 1, rotate: 360 }}
-                        transition={{ 
-                          scale: { 
-                            duration: 3, 
-                            repeat: Infinity,
-                            repeatType: "reverse" 
-                          },
-                          rotate: { 
-                            duration: 30, 
-                            repeat: Infinity,
-                            ease: "linear" 
-                          }
-                        }}
-                      >
-                        {/* Planet texture/detail */}
-                        <div className="absolute inset-3 rounded-full overflow-hidden opacity-50">
-                          <div className="absolute top-1/4 left-1/4 w-1/2 h-1/6 rounded-full bg-white/20 rotate-12"></div>
-                          <div className="absolute bottom-1/3 right-1/4 w-1/3 h-1/6 rounded-full bg-white/10 -rotate-12"></div>
-                  </div>
-                      </motion.div>
-                </div>
-                
-                    {/* Planet name overlay */}
-                    <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-gray-900 to-transparent">
-                      <div className="flex justify-between items-center">
-                        <h3 className="card-title text-lg font-bold font-orbitron text-cyan-300 group-hover:text-cyan-200">
+                  {/* Card glow effect */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-cyan-600/20 to-violet-600/20 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                  <div className={`relative card bg-gradient-to-br from-gray-800/90 to-gray-900/95 backdrop-blur-xl rounded-2xl overflow-hidden border border-gray-700/50 shadow-2xl shadow-black/40 h-full`}>
+                    {/* Planet visualization */}
+                    <div className="relative h-56 overflow-hidden bg-gradient-to-br from-gray-900/50 to-black/50">
+                      <div className={`absolute inset-0 bg-gradient-to-br ${planet.color} opacity-20`}></div>
+
+                      {/* Planet with Lottie Animation */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative w-32 h-32">
+                          {/* Background planet */}
+                          <motion.div
+                            className={`w-full h-full rounded-full bg-gradient-to-br ${planet.color} shadow-2xl relative`}
+                            initial={{ scale: 0.8 }}
+                            animate={{
+                              scale: [0.8, 1, 0.8]
+                            }}
+                            transition={{
+                              duration: 4,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                            style={{
+                              boxShadow: `0 0 40px ${planet.color.includes('blue') ? 'rgba(59, 130, 246, 0.4)' :
+                                                     planet.color.includes('green') ? 'rgba(34, 197, 94, 0.4)' :
+                                                     planet.color.includes('purple') ? 'rgba(147, 51, 234, 0.4)' :
+                                                     planet.color.includes('orange') ? 'rgba(249, 115, 22, 0.4)' :
+                                                     'rgba(56, 189, 248, 0.4)'}`
+                            }}
+                          >
+                            {/* Planet surface details */}
+                            <div className="absolute inset-2 rounded-full overflow-hidden opacity-60">
+                              <div className="absolute top-1/4 left-1/4 w-1/2 h-1/6 rounded-full bg-white/25 rotate-12"></div>
+                              <div className="absolute bottom-1/3 right-1/4 w-1/3 h-1/6 rounded-full bg-white/15 -rotate-12"></div>
+                              <div className="absolute top-1/2 left-1/3 w-1/4 h-1/8 rounded-full bg-white/20 rotate-45"></div>
+                            </div>
+                          </motion.div>
+
+                          {/* Overlay Lottie Animation */}
+                          <div className="absolute inset-0 opacity-30">
+                            <Lottie
+                              animationData={planetOrbitAnimation}
+                              loop={true}
+                              className="w-full h-full"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Discovery method badge */}
+                      <div className="absolute top-4 right-4">
+                        <div className="badge badge-sm bg-black/50 text-cyan-300 border-cyan-500/30 backdrop-blur-sm">
+                          {planet.discoveryMethod}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card content */}
+                    <div className="card-body p-6">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="card-title text-xl font-bold font-orbitron text-cyan-300 group-hover:text-cyan-200 transition-colors">
                           {planet.name}
                         </h3>
-                        <div className="badge badge-outline badge-sm border-purple-400 text-purple-300">
-                      {planet.type}
+                        <div className="badge badge-outline border-violet-400 text-violet-300 text-xs">
+                          {planet.type}
                         </div>
+                      </div>
+
+                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">{planet.description}</p>
+
+                      {/* Key facts */}
+                      <div className="space-y-3 text-sm mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-5 h-5 rounded-full bg-blue-900/50 flex items-center justify-center flex-shrink-0">
+                            <span className="text-blue-300 text-xs">🔭</span>
+                          </div>
+                          <span className="text-gray-400">
+                            <span className="text-gray-200 font-medium">{planet.distance}</span> away
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                          <div className="w-5 h-5 rounded-full bg-purple-900/50 flex items-center justify-center flex-shrink-0">
+                            <span className="text-purple-300 text-xs">📅</span>
+                          </div>
+                          <span className="text-gray-400">
+                            Discovered in <span className="text-gray-200 font-medium">{planet.yearDiscovered}</span>
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                          <div className="w-5 h-5 rounded-full bg-orange-900/50 flex items-center justify-center flex-shrink-0">
+                            <span className="text-orange-300 text-xs">🌡️</span>
+                          </div>
+                          <span className="text-gray-400">
+                            Temperature: <span className="text-gray-200 font-medium">{planet.temperature}</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Fun fact */}
+                      <div className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 rounded-lg p-3 mb-4 border border-indigo-700/30">
+                        <p className="text-cyan-200 text-sm font-medium">💡 Fun Fact:</p>
+                        <p className="text-gray-300 text-xs mt-1">{planet.funFact}</p>
+                      </div>
+
+                      <div className="card-actions justify-between items-center mt-4">
+                        <div className="flex gap-1">
+                          {[...Array(5)].map((_, i) => (
+                            <div key={i} className={`w-2 h-2 rounded-full ${i < 3 ? 'bg-cyan-400' : 'bg-gray-600'}`}></div>
+                          ))}
+                        </div>
+                        <button
+                          type="button"
+                          className="btn btn-sm bg-gradient-to-r from-cyan-600 to-blue-600 border-0 text-white hover:from-cyan-700 hover:to-blue-700 shadow-lg shadow-cyan-600/20 transition-all duration-300 hover:scale-105"
+                        >
+                          <span className="mr-1">🚀</span>
+                          Explore
+                        </button>
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="card-body p-5">
-                    <p className="text-gray-300 text-sm mb-4">{planet.description}</p>
-                    
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        <div className="w-4 h-4 rounded-full bg-blue-900 flex items-center justify-center">
-                          <span className="text-blue-300 text-xs">🔭</span>
-                    </div>
-                        <span className="text-gray-400">Distance: <span className="text-gray-200">{planet.distance}</span></span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-4 h-4 rounded-full bg-purple-900 flex items-center justify-center">
-                          <span className="text-purple-300 text-xs">📅</span>
-                        </div>
-                        <span className="text-gray-400">Discovered: <span className="text-gray-200">{planet.yearDiscovered}</span></span>
-                    </div>
-                  </div>
-                  
-                    <div className="card-actions justify-end mt-4">
-                      <button className="btn btn-sm btn-ghost text-cyan-400 hover:text-cyan-300 hover:bg-cyan-900/20 gap-2">
-                        <span>Explore</span>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                      </svg>
-                      </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
           
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-center mt-12"
+              className="text-center mt-16"
             >
-              <button className="btn btn-outline border-blue-500/50 text-blue-400 hover:bg-blue-900/30 hover:border-blue-500/80 px-8">
+              <button
+                type="button"
+                className="btn btn-outline border-blue-500/50 text-blue-400 hover:bg-blue-900/30 hover:border-blue-500/80 px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105"
+              >
                 <span className="mr-2">🔍</span> Discover More Exoplanets
               </button>
             </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
+
+        {/* Mind-Blowing Space Facts Carousel */}
+        <section className="py-24 relative overflow-hidden">
+          {/* Cosmic background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-purple-950/10 to-gray-950"></div>
+
+          {/* Floating cosmic elements */}
+          <motion.div
+            className="absolute top-20 left-20 w-2 h-2 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/70"
+            animate={{
+              opacity: [0.3, 1, 0.3],
+              scale: [1, 1.5, 1],
+              y: [0, -20, 0]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+          <motion.div
+            className="absolute bottom-32 right-32 w-1 h-1 bg-cyan-300 rounded-full shadow-md shadow-cyan-300/50"
+            animate={{
+              opacity: [0.5, 1, 0.5],
+              scale: [1, 2, 1],
+              x: [0, 15, 0]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          />
+
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <div className="badge badge-accent mb-6 text-sm font-semibold px-4 py-2 rounded-full bg-gradient-to-r from-pink-900 to-purple-900 text-pink-100 border border-pink-500/30 shadow-lg shadow-pink-500/20">
+                🌌 COSMIC WONDERS
+              </div>
+              <h2 className="text-5xl md:text-6xl font-bold mb-8 font-orbitron leading-tight">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-500 to-violet-600">
+                  Mind-Blowing
+                </span>
+                <br />
+                <span className="text-3xl md:text-4xl text-gray-300 font-light">
+                  Space Facts
+                </span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Prepare to have your mind blown by the most incredible facts about our universe.
+                Reality is stranger than fiction when it comes to space!
+              </p>
+            </motion.div>
+
+            {/* Auto-scrolling facts carousel */}
+            <div className="relative max-w-6xl mx-auto">
+              <motion.div
+                className="flex gap-6 pb-6"
+                animate={{ x: [0, -100 * spaceFacts.length] }}
+                transition={{
+                  duration: spaceFacts.length * 8,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              >
+                {[...spaceFacts, ...spaceFacts].map((fact, index) => (
+                  <motion.div
+                    key={`${fact.title}-${index}`}
+                    className="flex-shrink-0 w-80 h-64"
+                    whileHover={{ scale: 1.05, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="h-full bg-gradient-to-br from-gray-800/90 to-gray-900/95 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 shadow-2xl shadow-black/40 relative overflow-hidden group">
+                      {/* Background glow effect */}
+                      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                      <div className="relative z-10 h-full flex flex-col">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="text-4xl">{fact.icon}</div>
+                          <div>
+                            <h3 className="text-lg font-bold text-cyan-300 font-orbitron">{fact.title}</h3>
+                            <div className="badge badge-sm bg-purple-900/50 text-purple-300 border-purple-700/50">
+                              {fact.category}
+                            </div>
+                          </div>
+                        </div>
+
+                        <p className="text-gray-300 text-sm leading-relaxed flex-grow">
+                          {fact.fact}
+                        </p>
+
+                        <div className="flex justify-between items-center mt-4">
+                          <div className="flex gap-1">
+                            {[...Array(5)].map((_, i) => (
+                              <div key={i} className={`w-1.5 h-1.5 rounded-full ${i < 4 ? 'bg-purple-400' : 'bg-gray-600'}`}></div>
+                            ))}
+                          </div>
+                          <span className="text-xs text-gray-500">Mind = Blown 🤯</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
       {/* Learn & Play Section */}
       <section className="py-20 relative">
@@ -834,68 +1165,219 @@ const ExploreExoPage = () => {
         </div>
       </section>
 
-        {/* Community Section */}
-      <section className="py-20 relative">
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-              initial={{ opacity: 0, y: 30 }}
+        {/* Interactive Cosmic Map Section */}
+        <section className="py-24 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-indigo-950/20 to-gray-950"></div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-              className="max-w-6xl mx-auto bg-gradient-to-br from-gray-800/90 to-blue-900/50 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl border border-blue-900/50"
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="badge badge-accent mb-6 text-sm font-semibold px-4 py-2 rounded-full bg-gradient-to-r from-indigo-900 to-blue-900 text-indigo-100 border border-indigo-500/30 shadow-lg shadow-indigo-500/20">
+                🗺️ COSMIC NAVIGATION
+              </div>
+              <h2 className="text-5xl md:text-6xl font-bold mb-8 font-orbitron leading-tight">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-blue-500 to-cyan-400">
+                  Interactive
+                </span>
+                <br />
+                <span className="text-3xl md:text-4xl text-gray-300 font-light">
+                  Galaxy Map
+                </span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Explore where these incredible exoplanets are located in our galaxy.
+                Click on stars to discover their planetary systems!
+              </p>
+            </motion.div>
+
+            {/* Mini Galaxy Simulation */}
+            <motion.div
+              className="relative max-w-4xl mx-auto h-96 bg-gradient-to-br from-gray-900/50 to-black/80 rounded-3xl overflow-hidden border border-gray-700/50 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2 }}
+              viewport={{ once: true }}
+            >
+              {/* Galaxy spiral background */}
+              <div className="absolute inset-0 bg-gradient-radial from-blue-900/20 via-purple-900/10 to-transparent"></div>
+
+              {/* Interactive star systems */}
+              {exoplanets.slice(0, 4).map((planet, index) => (
+                <motion.div
+                  key={planet.name}
+                  className="absolute cursor-pointer group"
+                  style={{
+                    top: `${20 + index * 20}%`,
+                    left: `${15 + index * 20}%`,
+                  }}
+                  whileHover={{ scale: 1.2 }}
+                  animate={{
+                    opacity: [0.7, 1, 0.7],
+                  }}
+                  transition={{
+                    opacity: { duration: 2, repeat: Infinity, delay: index * 0.5 }
+                  }}
+                >
+                  {/* Star */}
+                  <div className="w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-lg shadow-yellow-400/50 relative">
+                    <div className="absolute -inset-1 bg-yellow-400/30 rounded-full blur-sm"></div>
+                  </div>
+
+                  {/* Planet orbit */}
+                  <motion.div
+                    className="absolute top-1/2 left-1/2 w-12 h-12 border border-cyan-400/30 rounded-full"
+                    style={{ transform: 'translate(-50%, -50%)' }}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 10 + index * 2, repeat: Infinity, ease: "linear" }}
+                  >
+                    <div className={`absolute top-0 left-1/2 w-2 h-2 bg-gradient-to-r ${planet.color} rounded-full transform -translate-x-1/2 -translate-y-1/2`}></div>
+                  </motion.div>
+
+                  {/* Info tooltip */}
+                  <div className="absolute top-6 left-6 bg-black/80 backdrop-blur-sm rounded-lg p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 min-w-48">
+                    <h4 className="text-cyan-300 font-semibold text-sm">{planet.name}</h4>
+                    <p className="text-gray-300 text-xs">{planet.distance} away</p>
+                    <p className="text-gray-400 text-xs">{planet.type}</p>
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Galaxy center */}
+              <motion.div
+                className="absolute top-1/2 left-1/2 w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.8, 1, 0.8]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <div className="absolute -inset-2 bg-purple-500/20 rounded-full blur-md"></div>
+              </motion.div>
+
+              {/* Cosmic dust */}
+              {[...Array(20)].map((_, i) => (
+                <motion.div
+                  key={`cosmic-dust-${i}`}
+                  className="absolute w-0.5 h-0.5 bg-white rounded-full opacity-60"
+                  style={{
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`,
+                  }}
+                  animate={{
+                    opacity: [0.3, 1, 0.3],
+                    scale: [0.5, 1, 0.5]
+                  }}
+                  transition={{
+                    duration: 2 + Math.random() * 3,
+                    repeat: Infinity,
+                    delay: i * 0.1
+                  }}
+                />
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Enhanced Call-to-Action Section */}
+        <section className="py-24 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-blue-950/20 to-gray-950"></div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="max-w-6xl mx-auto bg-gradient-to-br from-gray-800/90 to-blue-900/60 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-blue-900/50"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2">
                 <div className="p-8 md:p-12 relative overflow-hidden">
-                  {/* Decorative elements */}
+                  {/* Decorative cosmic elements */}
                   <div className="absolute -top-20 -left-20 w-40 h-40 rounded-full bg-blue-600/20 blur-3xl"></div>
                   <div className="absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-cyan-600/20 blur-3xl"></div>
-                  
+
                   <div className="relative">
-                    <div className="mb-6">
-                      <div className="badge badge-primary mb-2">JOIN US</div>
-                      <h3 className="text-3xl font-bold font-orbitron text-white mb-4">
-                        Become a Space Explorer!
+                    <div className="mb-8">
+                      <div className="badge badge-primary mb-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 border-0 text-white">
+                        🚀 JOIN THE MISSION
+                      </div>
+                      <h3 className="text-4xl font-bold font-orbitron text-white mb-6 leading-tight">
+                        Become a Cosmic Explorer!
                       </h3>
-                      <p className="text-blue-200 mb-8">
-                        Join our community of young space enthusiasts! Learn, share discoveries, and connect with fellow explorers.
+                      <p className="text-blue-200 mb-8 text-lg leading-relaxed">
+                        Join thousands of young space enthusiasts on an incredible journey through the cosmos.
+                        Discover, learn, and explore the wonders of the universe together!
                       </p>
                     </div>
-                    
-                    <div className="space-y-4 mb-8">
+
+                    <div className="space-y-6 mb-10">
                       <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 rounded-full bg-cyan-900/70 flex items-center justify-center flex-shrink-0">
-                          <span className="text-cyan-300 text-lg">🏆</span>
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-600/30">
+                          <span className="text-white text-xl">🏆</span>
                         </div>
                         <div>
-                          <h4 className="font-medium text-blue-300">Earn Space Badges</h4>
-                          <p className="text-sm text-gray-300">Complete challenges and quizzes to collect cosmic achievements</p>
+                          <h4 className="font-semibold text-cyan-300 text-lg">Earn Cosmic Badges</h4>
+                          <p className="text-gray-300">Complete space missions and quizzes to unlock exclusive achievements and become a certified space explorer!</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 rounded-full bg-cyan-900/70 flex items-center justify-center flex-shrink-0">
-                          <span className="text-cyan-300 text-lg">👨‍🚀</span>
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-600/30">
+                          <span className="text-white text-xl">👨‍🚀</span>
                         </div>
                         <div>
-                          <h4 className="font-medium text-blue-300">Safe Community</h4>
-                          <p className="text-sm text-gray-300">Kid-friendly, moderated environment for learning and sharing</p>
+                          <h4 className="font-semibold text-purple-300 text-lg">Safe Learning Environment</h4>
+                          <p className="text-gray-300">Kid-friendly, moderated community where curiosity thrives and every question leads to amazing discoveries!</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 rounded-full bg-cyan-900/70 flex items-center justify-center flex-shrink-0">
-                          <span className="text-cyan-300 text-lg">🔭</span>
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-green-600 to-teal-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-green-600/30">
+                          <span className="text-white text-xl">🔭</span>
                         </div>
                         <div>
-                          <h4 className="font-medium text-blue-300">Exclusive Content</h4>
-                          <p className="text-sm text-gray-300">Access special missions, games and educational resources</p>
+                          <h4 className="font-semibold text-green-300 text-lg">Exclusive Space Content</h4>
+                          <p className="text-gray-300">Access special missions, interactive games, and educational resources created by real space scientists!</p>
                         </div>
                       </div>
                     </div>
-                    
-                    <button className="btn btn-primary bg-gradient-to-r from-blue-600 to-cyan-600 border-0 text-white px-8">
-                      Join Now - It's Free!
-                    </button>
+
+                    <div className="flex flex-col sm:flex-row gap-4 items-center">
+                      <button
+                        type="button"
+                        className="btn btn-lg bg-gradient-to-r from-blue-600 to-cyan-600 border-0 text-white px-8 py-4 rounded-full font-semibold shadow-2xl shadow-blue-600/30 hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 hover:scale-105"
+                      >
+                        <span className="mr-2 text-xl">🚀</span>
+                        Start Your Journey - Free!
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-lg btn-outline border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-900/40 hover:text-cyan-200 px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105"
+                      >
+                        <span className="mr-2 text-xl">📚</span>
+                        Learn More
+                      </button>
+                    </div>
+
+                    {/* Add Lottie Animation for CTA */}
+                    <div className="mt-6 flex justify-center">
+                      <div className="w-12 h-12">
+                        <Lottie
+                          animationData={rocketLaunchAnimation}
+                          loop={true}
+                          className="w-full h-full"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
@@ -1094,24 +1576,8 @@ const ExploreExoPage = () => {
         </footer>
       </div>
       
-      {/* Floating Action Button */}
-      <motion.div 
-        className="fixed bottom-6 right-6 z-50"
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1, duration: 0.3 }}
-      >
-        <div className="dropdown dropdown-top dropdown-end">
-          <label tabIndex={0} className="btn btn-circle bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-lg shadow-blue-900/50 hover:shadow-xl hover:shadow-blue-900/70">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          </label>
-          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow-xl bg-gray-800/95 backdrop-blur-md rounded-box w-52 border border-blue-900/30 text-gray-200">
-            <li><a className="hover:bg-blue-900/30">Help & FAQs</a></li>
-            <li><a className="hover:bg-blue-900/30">Contact Support</a></li>
-            <li><a className="hover:bg-blue-900/30">Report an Issue</a></li>
-          </ul>
-        </div>
-      </motion.div>
+      {/* Floating Contact Button */}
+      <FloatingContactButton />
     </div>
   );
 };
